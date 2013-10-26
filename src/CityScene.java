@@ -25,7 +25,11 @@ import java.text.DecimalFormat;
  */
 public class CityScene extends JFrame implements GLEventListener, KeyListener{
 
-    private GLCanvas canvas;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private GLCanvas canvas;
     private GLU glu;
 
     private float camera_x;
@@ -41,31 +45,18 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
     private Animator anim;
     private TextRenderer text;
     private DecimalFormat form;
-    private double pan;
-    
+    private Tree tree;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CityScene cityScene = new CityScene();
+        @SuppressWarnings("unused")
+		CityScene cityScene = new CityScene();
     }
 
     public CityScene() {
-        pan = 0.0;
-        camera_x = 0;
-        camera_y = (float) 10 ; //-8.10;
-        camera_z = (float) -10 ; //  3.30; // -10
-        
-        center_x = 0;
-        center_y = 0;
-        center_z = 0;
-        
-        up_x = 0;
-        up_y = 1;
-        up_z = 0;
-        
-        angle = 0;
-        
+    	reset(); // Resets the camera glu.gluLookAt parameters
+
         text = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
         form = new DecimalFormat("####0.00");
         
@@ -78,6 +69,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         anim = new Animator(canvas);
         anim.start();
         
+
         setTitle("City Scene");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -96,7 +88,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         gl.glShadeModel(GL.GL_SMOOTH);
         gl.glClearDepth(1.0f);
         
-        
+        tree = new Tree();
         createDoubleLaneLine(gl);
         createGreenFields(gl);
         createZebraCrossing(gl);
@@ -116,6 +108,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         gl.glCallList(1); // Creates Double Lane Line
         gl.glCallList(2); // Creates Green Fields
         gl.glCallList(3); // Creates Zebra Crossing Box
+        tree.drawTree(drawable);
         gl.glPopMatrix();
         
         displayCameraPositionInfo(drawable);
@@ -208,7 +201,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         }// end of for loop
         gl.glEnd();
         
-        // Weast Crossing
+        // West Crossing
         y1 = (float) -0.9;
         y2 = (float) -0.7;
 
@@ -234,7 +227,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         int index = gl.glGenLists(1);        
         gl.glNewList(index, GL.GL_COMPILE);
         
-        gl.glBegin(GL.GL_QUADS); // Four vertice
+        gl.glBegin(GL.GL_QUADS); // Four vertices
 
         gl.glColor3f(0.0f, 0.3f, 0.0f);  // Dark Green
 
@@ -397,7 +390,21 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         
     }
     
+    private void reset(){
+    	camera_x = 0;
+    	camera_y = (float) 10 ; //-8.10;
+    	camera_z = (float) -10 ; //  3.30; // -10
 
+    	center_x = 0;
+    	center_y = 0;
+    	center_z = 0;
+
+    	up_x = 0;
+    	up_y = 1;
+    	up_z = 0;
+
+    	angle = 0;	
+    }
     
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -418,84 +425,63 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
     public void keyPressed(KeyEvent ke) {
         
         String keyString = "" + ke.getKeyChar() + "";
-        
-        if (ke.getKeyCode() == KeyEvent.VK_UP) {
-            // Moves camera FORWARD
+                
+
+        if ((ke.getKeyCode() == KeyEvent.VK_UP) && 
+                ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+        	// Moves UPWARD in yx plane
+            camera_y += 0.5;
+        } else if (ke.getKeyCode() == KeyEvent.VK_UP) {
+            // Moves FORWARD on xz plane
             camera_z+= 0.1;
             center_z+= 0.1;
         }
         
-        if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-            // Moves camera BACK
-            camera_z-= 0.1;
-            center_z-= 0.1;
-        }
         
-        
-        if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
-            // Moves camera to the LEFT
-            camera_x-= 0.1;
-            center_x-= 0.1;
-        }
-        
-        if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-            // Moves camera to the RIGHT
-            camera_x+= 0.1;
-            center_x+= 0.1;             
-        }   
-        
-        
-        // Modifies "x" coordinates
-        if (keyString.equals("x")) {
-            camera_x += 0.5;
-        }
-        
-        if ((ke.getKeyCode() == KeyEvent.VK_X) && 
+        if ((ke.getKeyCode() == KeyEvent.VK_DOWN) && 
                 ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-            camera_x -= 0.5;
-        }        
-        
- 
-        
-        // Modifies "y" coordinates
-        if (keyString.equals("y")) {
-            camera_y += 0.5;
-        }
-        if ((ke.getKeyCode() == KeyEvent.VK_Y) && 
-                ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-            if (camera_y >= 0.5)
+        	// Moves DOWNWARD on xz plane
+            if (camera_y >= 0.5) // Do not allow to go beneath 'x' plane
             {
                 camera_y -= 0.5;
             }
+        } else  if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
+            // Moves BACKWARDS on xz plane
+            camera_z-= 0.1;
+            center_z-= 0.1;
         }
       
-        // Modifies "z" coordinates
-        if (keyString.equals("z")){
-            camera_z+=0.5;
-        }
-        if ((ke.getKeyCode() == KeyEvent.VK_Z) && 
-                ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-            camera_z -= 0.5;
-        }        
-        
-        // Panning the camera. 
-       if (keyString.equals("l")){ 
-             // Pan left. Lower case "L"
-           if ((angle <= 180) && (angle > -180)){
-               angle -= 1f;
-           }
+      
+         
+        if ((ke.getKeyCode() == KeyEvent.VK_LEFT) && 
+        		((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+        	// PAN LEFT. 
+        	if (angle == 0f) {
+        		angle = 359f;
+        	} else {angle -= 1f;}
+        	
+        } else if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+            // Moves camera to the LEFT on the xz plane
+            camera_x-= 0.1;
+            center_x-= 0.1;
         }
        
-       if (keyString.equals("r")){
-             // Pan right
-           if ((angle >= -180) && (angle < 180)){
-             angle += 1f;             
-           }
+        
+       if ((ke.getKeyCode() == KeyEvent.VK_RIGHT) && 
+       		((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+             // PAN RIGHT
+           if (angle == 359f){
+             angle = 0f;             
+           } else {angle += 1f;}
+        } else if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+            // Moves camera to the RIGHT on the xz plane
+            camera_x+= 0.1;
+            center_x+= 0.1;             
         }       
        
-       // Resets panning angle
-        if (keyString.equals("h")){            
-            angle=0;
+       // Resets Camera's glu.gluLookAt parameters
+        if (keyString.equals("r")){            
+            reset();
         }
        
 
