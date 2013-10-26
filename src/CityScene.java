@@ -41,6 +41,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
     private Animator anim;
     private TextRenderer text;
     private DecimalFormat form;
+    private double pan;
     
     /**
      * @param args the command line arguments
@@ -50,23 +51,10 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
     }
 
     public CityScene() {
-
+        pan = 0.0;
         camera_x = 0;
         camera_y = (float) 10 ; //-8.10;
         camera_z = (float) -10 ; //  3.30; // -10
-        
-//        center_x = 0;
-//        center_y = (float) 5.10;
-//        center_z = 0;
-//        
-//        up_x = 0;
-//        up_y = 1;
-//        up_z = 0;
-//        
-        angle = 0;
-        
-        text = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
-        form = new DecimalFormat("####0.00");
         
         center_x = 0;
         center_y = 0;
@@ -76,8 +64,11 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         up_y = 1;
         up_z = 0;
         
+        angle = 0;
+        
         text = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
         form = new DecimalFormat("####0.00");
+        
         
         GLCapabilities caps = new GLCapabilities();
         canvas = new GLCanvas(caps);
@@ -105,21 +96,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         gl.glShadeModel(GL.GL_SMOOTH);
         gl.glClearDepth(1.0f);
         
-        // Camera Set Up
-        gl.glMatrixMode(GL.GL_PROJECTION);
-        gl.glLoadIdentity();
         
-        // Perspective.
-        float widthHeightRatio = (float) getWidth() / (float) getHeight();
-        glu.gluPerspective(45, widthHeightRatio, 1, 1000);
-        
-        gl.glMatrixMode(GL.GL_MODELVIEW);
-        gl.glLoadIdentity();
-        
-        glu.gluLookAt(camera_x, camera_y, camera_z, center_x, center_y,
-                center_z, up_x, up_y, up_z);
-        
-        // 
         createDoubleLaneLine(gl);
         createGreenFields(gl);
         createZebraCrossing(gl);
@@ -134,7 +111,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
 
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glPushMatrix();
-        gl.glRotatef(90, 1, 0, 0);
+        gl.glRotatef(angle, 0, 1, 0); // Panning
+        gl.glRotatef(-90, 1, 0, 0);   // Rotate World!
         gl.glCallList(1); // Creates Double Lane Line
         gl.glCallList(2); // Creates Green Fields
         gl.glCallList(3); // Creates Zebra Crossing Box
@@ -261,7 +239,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         gl.glColor3f(0.0f, 0.3f, 0.0f);  // Dark Green
 
         
-            gl.glRotated(center_z, 1.0, 0.0, 0.0);
+        //    gl.glRotated(center_z, 1.0, 0.0, 0.0);
         
         // upper left field
         gl.glVertex3f(-1.0f, 6.0f, 0f);// coordinates x, y, z 
@@ -407,11 +385,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         // Perspective.
         float widthHeightRatio = (float) getWidth() / (float) getHeight();
         glu.gluPerspective(45, widthHeightRatio, 1, 1000);
-        /*
-         * For panning, the rotation call needs to be before the resetiing of 
-         * the camera 
-         */
-        gl.glRotatef(angle, 0.f, 1.f, 0.f);/* orbit the Y axis */
+        
+
         glu.gluLookAt(camera_x, camera_y, camera_z, center_x, center_y,
                 center_z, up_x, up_y, up_z);
        
@@ -421,7 +396,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         gl.glLoadIdentity();
         
     }
+    
 
+    
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -464,58 +441,64 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener{
         if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
             // Moves camera to the RIGHT
             camera_x+= 0.1;
-            center_x+= 0.1;
-
-
-             
-        }        
+            center_x+= 0.1;             
+        }   
         
-        if (keyString.equals("x")){
-             center_x+=0.5;
+        
+        // Modifies "x" coordinates
+        if (keyString.equals("x")) {
+            camera_x += 0.5;
         }
         
-       if (keyString.equals("l")){
-             // Pan left
+        if ((ke.getKeyCode() == KeyEvent.VK_X) && 
+                ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+            camera_x -= 0.5;
+        }        
+        
+ 
+        
+        // Modifies "y" coordinates
+        if (keyString.equals("y")) {
+            camera_y += 0.5;
+        }
+        if ((ke.getKeyCode() == KeyEvent.VK_Y) && 
+                ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+            if (camera_y >= 0.5)
+            {
+                camera_y -= 0.5;
+            }
+        }
+      
+        // Modifies "z" coordinates
+        if (keyString.equals("z")){
+            camera_z+=0.5;
+        }
+        if ((ke.getKeyCode() == KeyEvent.VK_Z) && 
+                ((ke.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+            camera_z -= 0.5;
+        }        
+        
+        // Panning the camera. 
+       if (keyString.equals("l")){ 
+             // Pan left. Lower case "L"
            if ((angle <= 180) && (angle > -180)){
                angle -= 1f;
            }
-
         }
+       
        if (keyString.equals("r")){
              // Pan right
            if ((angle >= -180) && (angle < 180)){
              angle += 1f;             
            }
         }       
-        if (keyString.equals("h")){
-            
+       
+       // Resets panning angle
+        if (keyString.equals("h")){            
             angle=0;
         }
        
-       
-        if (keyString.equals("y")){
-            camera_y+=0.1;
-            //center_y-= camera_y;
 
-
-        }
-
-        if (keyString.equals("z")){
-            camera_z+=0.1;
-        }
-        
-
-        if (keyString.equals("a")){
-            camera_x-=0.1;
-        }
-        if (keyString.equals("b")){
-            //camera_y++;
-            camera_y-=0.1;
-        }
-        if (keyString.equals("c")){
-            camera_z-=0.1;
-        }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
