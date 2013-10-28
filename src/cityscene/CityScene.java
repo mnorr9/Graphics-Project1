@@ -47,11 +47,12 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private TextRenderer text;
     private DecimalFormat form;
     private Tree tree;
-    
+    private Building building;
     private float sceneBoundary_x;
     private float sceneBoundary_y;
     private float sceneBoundary_z;
-    
+    private SpCar car;
+    private float drive=-200.0f;
     /**
      * @param args the command line arguments
      */
@@ -77,8 +78,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         add(canvas);
         anim = new Animator(canvas);
         anim.start();
-
-
+        building = new Building();
+        car = new SpCar();
+        
         setTitle("City Scene");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -123,8 +125,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glCallList(2); // Creates Green Fields
         gl.glCallList(3); // Creates Zebra Crossing Box
 
-
-
         plantTree(drawable, -3.0f, 5.0f);
         plantTree(drawable, -3.0f, -3.0f);
         plantTree(drawable, -2.0f, -4.0f);
@@ -137,13 +137,13 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         plantTree(drawable, -2.0f, -15.0f);
         plantTree(drawable, 5.0f, -10.0f);
         
+        drawBuildings(drawable, 3.0f, 1.66f);
+        drawBuildings(drawable, 4.5f, 1.66f);
         
-        
-        
+                drawCar(gl);
         gl.glPopMatrix();
 
-
-
+        //drawCar(gl);
         displayCameraPositionInfo(drawable);
         gl.glFlush();
     }//end of display()
@@ -155,6 +155,19 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glRotatef(-90, 1, 0, 0); // Rotate World!
         gl.glTranslatef(coord_x, coord_y, 0.0f);
         tree.drawTree(drawable); 
+    }
+    
+    private void drawBuildings(GLAutoDrawable drawable, float coord_x, float coord_y) {
+        GL gl = drawable.getGL();
+        gl.glLoadIdentity();
+        // draw building #1
+        gl.glPushMatrix();
+        gl.glRotatef(angle, 0, 1, 0); // Panning
+        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
+        gl.glTranslated(coord_x, coord_y, 0.0);
+        building.drawBuilding(drawable);
+        gl.glPopMatrix();
+
     }
     
     private void displayCameraPositionInfo(GLAutoDrawable drawable) {
@@ -638,4 +651,34 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     public void keyReleased(KeyEvent ke) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+
+    private void drawCar(GL gl) {
+        gl.glLoadIdentity();
+        gl.glRotatef(angle, 0, 1, 0); // Panning
+
+        
+        if (drive < 0) {
+            gl.glPushMatrix();
+                gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
+                gl.glScalef(0.05f, 0.05f, 0.05f);
+                gl.glTranslatef(drive, 0.0f, 0.0f);
+                car.createCar(gl);
+                drive += 0.1;
+            gl.glPopMatrix();
+        } else {
+            gl.glLoadIdentity();
+            gl.glPushMatrix();
+    		gl.glRotatef(0f, 0.0f, 1.0f, 0.0f);
+                gl.glRotatef(-90f, 0.0f, 1.0f, 0.0f);
+    		     
+                
+                gl.glScalef(0.05f, 0.05f, 0.05f);
+                gl.glTranslatef(drive, 2f, 0f);
+                car.createCar(gl);
+                drive += 0.1;
+            gl.glPopMatrix();
+        }
+    }
+    
 }
