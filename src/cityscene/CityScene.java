@@ -143,8 +143,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         gl.glPopMatrix();
         
+        // Draw buildings
         drawBuildings(drawable);
-
 
         displayCameraPositionInfo(drawable);
         gl.glFlush();
