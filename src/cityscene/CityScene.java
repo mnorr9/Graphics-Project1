@@ -19,8 +19,6 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
 
-import com.group2.Building;
-import com.group2.Store;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.j2d.TextRenderer;
 

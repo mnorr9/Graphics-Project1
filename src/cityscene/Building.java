@@ -1,4 +1,4 @@
-package com.group2;
+package cityscene;
 
 
 import javax.media.opengl.GL;
