@@ -137,8 +137,10 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         plantTree(drawable, -2.0f, -15.0f);
         plantTree(drawable, 5.0f, -10.0f);
         
-        drawBuildings(drawable, 3.0f, 1.66f);
+        drawBuildings(drawable, 6.0f, 1.66f);
         drawBuildings(drawable, 4.5f, 1.66f);
+          
+        drawStore(drawable, 6.66f, -1.66f);
         
                 drawCar(gl);
         gl.glPopMatrix();
@@ -158,14 +160,29 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     }
     
     private void drawBuildings(GLAutoDrawable drawable, float coord_x, float coord_y) {
-        GL gl = drawable.getGL();
+    	GL gl = drawable.getGL();
         gl.glLoadIdentity();
         // draw building #1
         gl.glPushMatrix();
         gl.glRotatef(angle, 0, 1, 0); // Panning
         gl.glRotatef(-90, 1, 0, 0); // Rotate World!
+        gl.glRotatef(-180, 0, 0,1); // Rotate 
         gl.glTranslated(coord_x, coord_y, 0.0);
         building.drawBuilding(drawable);
+        gl.glPopMatrix();
+
+    }
+    
+    private void drawStore(GLAutoDrawable drawable, float coord_x, float coord_y) {
+        GL gl = drawable.getGL();
+        gl.glLoadIdentity();
+        // draw store 
+        gl.glPushMatrix();
+        gl.glRotatef(angle, 0, 1, 0); // Panning
+        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
+        gl.glTranslated(coord_x, coord_y, 0.0);
+        gl.glRotatef(-180, 0, 0, 1);
+        Store.drawStore(drawable);
         gl.glPopMatrix();
 
     }
