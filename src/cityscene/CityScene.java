@@ -1,16 +1,11 @@
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package cityscene;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.DecimalFormat;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
@@ -18,9 +13,11 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
-
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.j2d.TextRenderer;
+import java.awt.Color;
+import java.awt.Font;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -44,11 +41,12 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private float up_y;
     private float up_z;
     private float angle; // angle of rotation for the camera direction
+    private float angle2;
+    
     private Animator anim;
     private TextRenderer text;
     private DecimalFormat form;
     private Tree tree;
-    private Building building;
     
     private float sceneBoundary_x;
     private float sceneBoundary_y;
@@ -104,7 +102,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         createGreenFields(gl);       
         createZebraCrossing(gl);
                 
-        building = new Building();
+
     }
 
     @Override
@@ -139,41 +137,16 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         plantTree(drawable, -2.0f, -15.0f);
         plantTree(drawable, 5.0f, -10.0f);
         
-        gl.glPopMatrix();
         
-        // Draw buildings
-        drawBuildings(drawable);
+        
+        
+        gl.glPopMatrix();
+
+
 
         displayCameraPositionInfo(drawable);
         gl.glFlush();
     }//end of display()
-    
-    private void drawBuildings(GLAutoDrawable drawable) {
-    		
-    	GL gl = drawable.getGL();
-    	
-    	gl.glLoadIdentity();
-        gl.glRotatef(angle, 0, 1, 0); // Panning
-        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
-    	
-    	// draw building #1
-        gl.glPushMatrix();
-        gl.glTranslated(3.0, 1.0, 0.0);
-        building.drawBuilding(drawable);
-        gl.glPopMatrix();
-        
-        // draw building #2
-        gl.glPushMatrix();
-        gl.glTranslated(4.5, 1.0, 0.0);
-        building.drawBuilding(drawable);
-        gl.glPopMatrix();
-        
-        // draw building(store) #3
-        gl.glPushMatrix();
-        gl.glTranslated(-5.0, 1.0, 0.0);
-        Store.drawStore(drawable);
-        gl.glPopMatrix();
-	}
 
     private void plantTree(GLAutoDrawable drawable, float coord_x, float coord_y){
         GL gl = drawable.getGL();
@@ -298,32 +271,82 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glBegin(GL.GL_QUADS); // Four vertices
 
         drawSky(gl);
+
         
-        gl.glColor3f(0.0f, 0.3f, 0.0f); // Dark Green
+        // lower right sidewalk
+        gl.glColor3f(0.3f, 0.3f, 0.3f); // Grey
+        gl.glVertex3f(-1.0f,  15.0f, 0f);
+        gl.glVertex3f(-1.65f, 15.0f, 0f);
+        gl.glVertex3f(-1.65f,  1.0f, 0f);
+        gl.glVertex3f(-1.0f,   1.0f, 0f);
+        
+        gl.glVertex3f(-1.65f,  1.00f, 0f);
+        gl.glVertex3f(-1.65f,  1.65f, 0f);
+        gl.glVertex3f(-15.0f,  1.65f, 0f);
+        gl.glVertex3f(-15.0f,   1.0f, 0f);
+        
+        
+        // upper right sidewalk
+        gl.glVertex3f(-1.0f,  -15.0f, 0f);
+        gl.glVertex3f(-1.65f, -15.0f, 0f);
+        gl.glVertex3f(-1.65f,  -1.0f, 0f);
+        gl.glVertex3f(-1.0f,   -1.0f, 0f);
+
+        gl.glVertex3f(-1.65f,  -1.00f, 0f);
+        gl.glVertex3f(-1.65f,  -1.65f, 0f);
+        gl.glVertex3f(-15.0f,  -1.65f, 0f);
+        gl.glVertex3f(-15.0f,  -1.00f, 0f);
+        
+        
+        // upper left sidewalk
+        gl.glVertex3f(1.0f,  -15.0f, 0f);
+        gl.glVertex3f(1.65f, -15.0f, 0f); 
+        gl.glVertex3f(1.65f,  -1.0f, 0f);
+        gl.glVertex3f(1.0f,   -1.0f, 0f);        
+
+        gl.glVertex3f(1.65f,  -1.00f, 0f);
+        gl.glVertex3f(1.65f,  -1.65f, 0f);
+        gl.glVertex3f(15.0f,  -1.65f, 0f);
+        gl.glVertex3f(15.0f,  -1.00f, 0f);
+        
+        
+        // lower left sidewalk
+        gl.glVertex3f(1.0f,  15.0f, 0f);
+        gl.glVertex3f(1.65f, 15.0f, 0f); 
+        gl.glVertex3f(1.65f,  1.0f, 0f);
+        gl.glVertex3f(1.0f,   1.0f, 0f);
+        
+        gl.glVertex3f(1.65f,  1.00f, 0f);
+        gl.glVertex3f(1.65f,  1.65f, 0f);
+        gl.glVertex3f(15.0f,  1.65f, 0f);
+        gl.glVertex3f(15.0f,  1.00f, 0f);
+        
+        /***********************************/
                 
-        // upper left field
-        gl.glVertex3f(-1.0f, 15.0f, 0f);// coordinates x, y, z
+        // lower right field
+        gl.glColor3f(0.0f, 0.3f, 0.0f); // Dark Green        
+        gl.glVertex3f(-1.66f, 15.0f, 0f);
         gl.glVertex3f(-15.0f, 15.0f, 0f);
-        gl.glVertex3f(-15.0f, 1.0f, 0f);
-        gl.glVertex3f(-1.0f, 1.0f, 0f);
+        gl.glVertex3f(-15.0f,  1.66f, 0f);
+        gl.glVertex3f(-1.66f,  1.66f, 0f);
+        
+        // upper right field
+        gl.glVertex3f(-1.66f, -15.0f, 0f);
+        gl.glVertex3f(-15.0f, -15.0f, 0f);
+        gl.glVertex3f(-15.0f,  -1.66f, 0f);
+        gl.glVertex3f(-1.66f,  -1.66f, 0f);
+        
+        // upper left field
+        gl.glVertex3f(1.66f, -15.0f, 0f);
+        gl.glVertex3f(15.0f, -15.0f, 0f);
+        gl.glVertex3f(15.0f,  -1.66f, 0f);
+        gl.glVertex3f(1.66f,  -1.66f, 0f);
 
         // lower left field
-        gl.glVertex3f(-1.0f, -15.0f, 0f);// coordinates x, y, z
-        gl.glVertex3f(-15.0f, -15.0f, 0f);
-        gl.glVertex3f(-15.0f, -1.0f, 0f);
-        gl.glVertex3f(-1.0f, -1.0f, 0f);
-
-        // lower right field
-        gl.glVertex3f(1.0f, -15.0f, 0f);
-        gl.glVertex3f(15.0f, -15.0f, 0f); // coordinates x, y, z
-        gl.glVertex3f(15.0f, -1.0f, 0f);
-        gl.glVertex3f(1.0f, -1.0f, 0f);
-
-        // upper right field
-        gl.glVertex3f(1.0f, 15.0f, 0f);
-        gl.glVertex3f(15.0f, 15.0f, 0f); // coordinates x, y, z
-        gl.glVertex3f(15.0f, 1.0f, 0f);
-        gl.glVertex3f(1.0f, 1.0f, 0f);
+        gl.glVertex3f(1.66f, 15.0f, 0f);
+        gl.glVertex3f(15.0f, 15.0f, 0f);
+        gl.glVertex3f(15.0f,  1.66f, 0f);
+        gl.glVertex3f(1.66f,  1.66f, 0f);
 
 
         gl.glEnd();
@@ -372,7 +395,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         // create one display list
         int index = gl.glGenLists(1);
         gl.glNewList(index, GL.GL_COMPILE);
-
+        gl.glLineWidth(3.0f);
         // North
         // ***************************************
         gl.glBegin(GL.GL_LINE_STRIP);
@@ -479,7 +502,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         float widthHeightRatio = (float) getWidth() / (float) getHeight();
         glu.gluPerspective(45, widthHeightRatio, 1, 1000);
 
-
+        gl.glRotatef(angle2, 0, 1, 0);
         glu.gluLookAt(camera_x, camera_y, camera_z, center_x, center_y,
                 center_z, up_x, up_y, up_z);
 
@@ -504,6 +527,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         up_z = 0;
 
         angle = 0;
+        angle2 = 0; 
     }
 
     @Override
@@ -596,6 +620,17 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
             reset();
         }
 
+        // Look left
+        if (keyString.equals("<")) {
+            angle2 -= 1.0f;
+        }
+        
+        // Look right
+        if (keyString.equals(">")) {
+            angle2 += 1.0f;
+        }        
+        
+        
 
     }
 
