@@ -19,7 +19,7 @@ public class Tree
 
     gl.glPushMatrix();
       gl.glRotated( 90, 1.0, 0.0, 0.0 );
-      gl.glScaled( .01, .01, .01 );  
+      gl.glScaled( .01, .01, .01 );
       gl.glPushMatrix();
         gl.glTranslated(-1.0, 25, 0.0);
         gl.glRotated(45, 0.0, 0.0, 1.0);

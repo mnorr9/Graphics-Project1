@@ -52,7 +52,14 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private float sceneBoundary_y;
     private float sceneBoundary_z;
     private SpCar car;
-    private float drive=-200.0f;
+    private float drive=-100.0f;
+    
+    private float drive2=-250.0f;
+    private float dooropen=0;
+    private float dooropen2=0;
+    private float turn = 0;
+    private boolean stop;
+    
     /**
      * @param args the command line arguments
      */
@@ -69,7 +76,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         sceneBoundary_x = 2.80f;
         sceneBoundary_z = 9.0f;
-        
+        stop = false;
         
         GLCapabilities caps = new GLCapabilities();
         canvas = new GLCanvas(caps);
@@ -131,18 +138,18 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         plantTree(drawable, 5.0f, 10.0f);
         plantTree(drawable, 5.0f,  5.0f);
-        
+        plantTree(drawable,-2.0f,  5.0f);        
         
         // Trees at the borders
         plantTree(drawable, -2.0f, -15.0f);
         plantTree(drawable, 5.0f, -10.0f);
         
-        drawBuildings(drawable, 6.0f, 1.66f);
+        drawBuildings(drawable, 3.0f, 1.66f);
         drawBuildings(drawable, 4.5f, 1.66f);
-          
-        drawStore(drawable, 6.66f, -1.66f);
+        drawStores(drawable, -4.5f,  1.66f);
         
-                drawCar(gl);
+        drawCar(gl);
+        drawCar2(gl);
         gl.glPopMatrix();
 
         //drawCar(gl);
@@ -160,28 +167,27 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     }
     
     private void drawBuildings(GLAutoDrawable drawable, float coord_x, float coord_y) {
-    	GL gl = drawable.getGL();
+        GL gl = drawable.getGL();
         gl.glLoadIdentity();
         // draw building #1
         gl.glPushMatrix();
         gl.glRotatef(angle, 0, 1, 0); // Panning
         gl.glRotatef(-90, 1, 0, 0); // Rotate World!
-        gl.glRotatef(-180, 0, 0,1); // Rotate 
         gl.glTranslated(coord_x, coord_y, 0.0);
         building.drawBuilding(drawable);
         gl.glPopMatrix();
 
     }
     
-    private void drawStore(GLAutoDrawable drawable, float coord_x, float coord_y) {
+    private void drawStores(GLAutoDrawable drawable, float coord_x, float coord_y) {
         GL gl = drawable.getGL();
         gl.glLoadIdentity();
-        // draw store 
+        // draw building #1
         gl.glPushMatrix();
         gl.glRotatef(angle, 0, 1, 0); // Panning
         gl.glRotatef(-90, 1, 0, 0); // Rotate World!
         gl.glTranslated(coord_x, coord_y, 0.0);
-        gl.glRotatef(-180, 0, 0, 1);
+        //building.drawBuilding(drawable);
         Store.drawStore(drawable);
         gl.glPopMatrix();
 
@@ -558,6 +564,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         angle = 0;
         angle2 = 0; 
+        
+        drive=-100.0f;
     }
 
     @Override
@@ -649,6 +657,13 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         if (keyString.equals("r")) {
             reset();
         }
+        
+        if (keyString.equals("t")) {
+            drive=-100.0f;
+            drive2=-250.0f;
+            turn = 0;
+            
+        }
 
         // Look left
         if (keyString.equals("<")) {
@@ -660,42 +675,186 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
             angle2 += 1.0f;
         }        
         
+        if (keyString.equals("9")) {
+			if (dooropen<70){
+			dooropen += 1;
+			}
+        }        
+        if (keyString.equals("8")) {
+			if (dooropen>0){
+			dooropen -= 1;
+			}
+        }        
+        if (keyString.equals("7")) {
+			if (dooropen2<70){
+			dooropen2 += 1;
+			}
+        }        
+        if (keyString.equals("6")) {
+			if (dooropen2>0){
+			dooropen2 -= 1;
+			}
+        }  
         
 
+       if (keyString.equals("s")) {
+            stop = !(stop);
+        } 
+        
+        
     }
 
     @Override
     public void keyReleased(KeyEvent ke) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 
-    private void drawCar(GL gl) {
+private void drawCar(GL gl) {
         gl.glLoadIdentity();
         gl.glRotatef(angle, 0, 1, 0); // Panning
 
         
-        if (drive < 0) {
+        if (drive < -60) {
             gl.glPushMatrix();
+                gl.glRotatef(angle, 0, 1, 0); // Panning
                 gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
-                gl.glTranslatef(drive, 0.0f, 0.0f);
-                car.createCar(gl);
+                gl.glTranslatef(drive, 1.0f, 6.0f);
+                car.createCar(gl, 1, 1, 0, dooropen);
                 drive += 0.1;
             gl.glPopMatrix();
-        } else {
+        } 
+        else if (drive >= -60 && drive < 0) {
             gl.glLoadIdentity();
             gl.glPushMatrix();
+            gl.glRotatef(angle, 0, 1, 0); // Panning
+            gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
+            gl.glScalef(0.05f, 0.05f, 0.05f);
+            gl.glTranslatef(-60.0f, 1.0f, 6.0f);
+            car.createCar(gl, 1, 1, 0, dooropen);
+            if ( stop == false){
+                drive += 0.1;
+            }
+            gl.glPopMatrix();	
+        }
+        else if (drive >= 0 && drive < 20) {
+            gl.glLoadIdentity();
+            gl.glPushMatrix();
+            gl.glRotatef(angle, 0, 1, 0); // Panning
+            gl.glScalef(0.05f, 0.05f, 0.05f);
+            gl.glTranslatef(drive-60f, 1.0f, 6.0f);
+            //gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
+            car.createCar(gl, 1, 1, 0, dooropen); 
+            if (stop == false){
+                drive += 0.1;
+            }
+            //turn -= 0.2;
+            gl.glPopMatrix();	
+        }
+        else if (drive >= 20 && drive < 40) {
+            gl.glLoadIdentity();
+            gl.glPushMatrix();
+            gl.glRotatef(angle, 0, 1, 0); // Panning
+            gl.glScalef(0.05f, 0.05f, 0.05f);
+            gl.glTranslatef(drive-60f, 1.0f, 6.0f);
+            gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
+            car.createCar(gl, 1, 1, 0, dooropen);
+            if (stop == false){
+                drive += 0.1;
+                turn -= 0.2;
+            }
+            gl.glPopMatrix();	
+        }
+        else if (drive >= 40 && drive < 50) {
+
+            gl.glLoadIdentity();
+            gl.glPushMatrix();
+            gl.glRotatef(angle, 0, 1, 0); // Panning
+            gl.glScalef(0.05f, 0.05f, 0.05f);
+            gl.glTranslatef(drive-60f, 1.0f, 6.0f);
+            gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
+            car.createCar(gl, 1, 1, 0, dooropen);
+            if (stop == false){
+                drive += 0.1;
+                turn -= 0.35;
+            }
+            gl.glPopMatrix();	
+        }
+        else if (drive >= 50 && drive < 55) {
+
+            gl.glLoadIdentity();
+            gl.glPushMatrix();
+            gl.glRotatef(angle, 0, 1, 0); // Panning
+            gl.glScalef(0.05f, 0.05f, 0.05f);
+            gl.glTranslatef(drive-60f, 1.0f, 6.0f);
+            gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
+            car.createCar(gl, 1, 1, 0, dooropen); 
+            if (stop == false){
+                drive += 0.1;
+                turn -= 0.45;
+            }
+            gl.glPopMatrix();	
+        } 
+        else
+        {
+            gl.glLoadIdentity();
+            gl.glPushMatrix();
+                gl.glRotatef(angle, 0, 1, 0); // Panning
     		gl.glRotatef(0f, 0.0f, 1.0f, 0.0f);
                 gl.glRotatef(-90f, 0.0f, 1.0f, 0.0f);
-    		     
-                
                 gl.glScalef(0.05f, 0.05f, 0.05f);
-                gl.glTranslatef(drive, 2f, 0f);
-                car.createCar(gl);
-                drive += 0.1;
+                gl.glTranslatef(drive-41f, 1.0f, 5.0f);
+                car.createCar(gl, 1, 1, 0, dooropen);
+                if (stop == false){
+                    drive += 0.1;
+                }
             gl.glPopMatrix();
         }
     }
+    
+    private void drawCar2(GL gl){
+        gl.glLoadIdentity();
+        gl.glRotatef(angle, 0, 1, 0); // Panning
+            gl.glPushMatrix();
+                //gl.glRotatef(angle, 0, 1, 0); // Panning
+                gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
+                gl.glRotatef(90f, 0.0f, 1.0f, 0.0f);
+                gl.glScalef(0.05f, 0.05f, 0.05f);
+                gl.glTranslatef(drive2, 0.0f, 5.0f);
+                car.createCar(gl, 1, 0, 0, dooropen2);
+                if (stop == false){
+                    drive2 += 0.3;
+                }
+            gl.glPopMatrix();
+    }    
+    
+    
+//    private void drawCar(GL gl) {
+//
+//        
+//        if (drive < 0) {
+//            gl.glPushMatrix();
+//                gl.glRotatef(angle, 0, 1, 0); // Panning
+//                gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
+//                gl.glScalef(0.05f, 0.05f, 0.05f);
+//                gl.glTranslatef(drive, 0.0f, 0.0f);
+//                car.createCar(gl);
+//                drive += 0.1;
+//            gl.glPopMatrix();
+//        } else {
+//            gl.glLoadIdentity();
+//            gl.glPushMatrix();
+//                gl.glRotatef(angle, 0, 1, 0); // Panning
+//    		gl.glRotatef(0f, 0.0f, 1.0f, 0.0f);
+//                gl.glRotatef(-90f, 0.0f, 1.0f, 0.0f);
+//    		     
+//                
+//                gl.glScalef(0.05f, 0.05f, 0.05f);
+//                gl.glTranslatef(drive, 2f, 0f);
+//                car.createCar(gl);
+//                drive += 0.1;
+//            gl.glPopMatrix();
+//        }
+//    }
     
 }

@@ -26,7 +26,7 @@ public class Shapes
     gl.glNormal3f(0.0f, 1.0f, 0.0f);
     gl.glVertex3f(0.0f, h, 0.0f);
     gl.glVertex3f(ur, 0.0f, 0.0f);
-    while (t <= 360) 
+    while (t <= 360)
     {
       radian = (float) (Math.PI * t / 180.0);
       gl.glVertex3f((float) (ur * Math.cos(radian)), h, (float) (ur * Math.sin(radian)));
@@ -91,22 +91,22 @@ public class Shapes
     
     gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
 
-     for(angle1=5.0; angle1<180; angle1+=inc) { 
-          radian1 = angle1*Math.PI/180; 
+     for(angle1=5.0; angle1<180; angle1+=inc) {
+          radian1 = angle1*Math.PI/180;
           r = radius*Math.sin(radian1);
       gl.glBegin(GL.GL_POLYGON);
           for(angle2=0.0; angle2<360; angle2+=inc) {
-              radian2 = angle2*Math.PI/180; 
+              radian2 = angle2*Math.PI/180;
             gl.glVertex3d(r*Math.sin(radian2), radius*Math.cos(radian1), r*Math.cos(radian2));
         }
       gl.glEnd();
      }
-     for(angle1=5.0; angle1<180; angle1+=inc) { 
-          radian1 = angle1*Math.PI/180; 
+     for(angle1=5.0; angle1<180; angle1+=inc) {
+          radian1 = angle1*Math.PI/180;
           r = radius*Math.sin(radian1);
       gl.glBegin(GL.GL_POLYGON);
           for(angle2=0.0; angle2<360; angle2+=inc) {
-              radian2 = angle2*Math.PI/180; 
+              radian2 = angle2*Math.PI/180;
             gl.glVertex3d(radius*Math.cos(radian1), r*Math.cos(radian2), r*Math.sin(radian2));
         }
     gl.glEnd();
@@ -206,9 +206,9 @@ public class Shapes
     h = 0.0f;
     t = theta;
     gl.glBegin(GL.GL_TRIANGLE_FAN);
-    //    gl.glColor3f(1.0f, 1.0f, 0.0f);
-    //  gl.glNormal3f(0.0f,3*h, 0.0f);
-    //    gl.glNormal3f(0.0f, 1.0f, 0.0f);
+    // gl.glColor3f(1.0f, 1.0f, 0.0f);
+    // gl.glNormal3f(0.0f,3*h, 0.0f);
+    // gl.glNormal3f(0.0f, 1.0f, 0.0f);
     //gl.glVertex3f(0.0f, 3 * h, 0.0f);
     gl.glVertex3f(0.0f, 3 * height, 0.0f);
     gl.glVertex3f(r, 0.0f, 0.0f);
@@ -219,7 +219,7 @@ public class Shapes
         radian = (float) (Math.PI * t / 180.0);
         x = (float) (r * Math.cos(radian));
         z = (float) (r * Math.sin(radian));
-        //    System.out.println("x: "+ x+" h: "+h+" z: "+ z);
+        // System.out.println("x: "+ x+" h: "+h+" z: "+ z);
         gl.glNormal3f(x, -1.0f, -z);
         gl.glVertex3f(x, h, z);
         t = t + theta;
@@ -229,3 +229,7 @@ public class Shapes
   }
 
 }
+
+
+
+

@@ -156,8 +156,8 @@ public class SpCar {
 
 		}
 
-		public void createTrunk(GL gl) {
-			gl.glColor3f(1.0f, 1.0f,  0.0f);
+		public void createTrunk(GL gl, float red, float green, float blue) {
+			gl.glColor3f(red, green,  blue);
 			gl.glBegin(GL.GL_POLYGON);
     			gl.glVertex3f(-3.0f, -1.0f, 0.0f);
     			gl.glVertex3f(-3.0f, -1.0f, 10.0f);
@@ -175,7 +175,7 @@ public class SpCar {
 			gl.glEnd();
 			createExhaust(gl);
 			createBreakLights(gl);
-			gl.glColor3f(1.0f, 1.0f, 0.0f);
+			gl.glColor3f(red, green, blue);
 			createSideTrunk(gl);
 			gl.glPushMatrix();
 				gl.glTranslatef(0f, 0f, 10.0f);
@@ -298,9 +298,9 @@ public class SpCar {
 			gl.glEnd();    	
 		}
     
-		private void createFront(GL gl){
+		private void createFront(GL gl, float red, float green, float blue){
 			createHeadLights(gl);
-			gl.glColor3f(1.0f,1.0f,0.0f);
+			gl.glColor3f(red, green, blue);
 			createHood(gl);
 			createFrontSide(gl);
 			gl.glPushMatrix();
@@ -320,7 +320,7 @@ public class SpCar {
 			t = t + theta;
 		}
 		
-		private void createRearWindow (GL gl) {
+		private void createRearWindow (GL gl, float red, float green, float blue) {
 			gl.glPushMatrix();
 				gl.glColor3f(0f, 0f, 0f);
 				gl.glBegin(GL.GL_TRIANGLES);
@@ -346,7 +346,7 @@ public class SpCar {
 			gl.glPopMatrix();
 			gl.glPushMatrix();
 				gl.glBegin(GL.GL_QUAD_STRIP);
-					gl.glColor3f(1.0f, 1.0f, 0.0f);
+					gl.glColor3f(red, green, blue);
 					gl.glVertex3f(-1.0f, 3.5f, 0.0f);
 					gl.glVertex3f(-1.0f, 3.5f, 10.0f);
 					gl.glVertex3f(-3.0f, 3.5f, 0.0f);
@@ -355,10 +355,10 @@ public class SpCar {
 			gl.glPopMatrix();
 		}
 	
-		private void createRoof(GL gl) {
+		private void createRoof(GL gl, float red, float green, float blue) {
 			gl.glPushMatrix();
 				gl.glBegin(GL.GL_QUAD_STRIP);
-					gl.glColor3f(1.0f, 1.0f, 0.0f);
+					gl.glColor3f(red, green, blue);
 					gl.glVertex3f(5.0f, 4.5f, 0.0f);
 					gl.glVertex3f(5.0f, 4.5f, 10.0f);
 					gl.glVertex3f(2.0f, 4.5f, 0.0f);
@@ -367,7 +367,7 @@ public class SpCar {
 			gl.glPopMatrix();	 
 			gl.glPushMatrix();
 				gl.glBegin(GL.GL_QUAD_STRIP);
-					gl.glColor3f(1.0f, 1.0f, 0.0f);
+					gl.glColor3f(red, green, blue);
 					gl.glVertex3f(2.5f, 3.3f, 0.0f);
 					gl.glVertex3f(2.5f, 4.5f, 0.0f);
 					gl.glVertex3f(2.0f, 3.3f, 0.0f);
@@ -403,15 +403,17 @@ public class SpCar {
 			gl.glEnd();
 		}
 	
-		private void createDoorAndWindow(GL gl) {
+		private void createDoorAndWindow(GL gl, float red, float green, float blue, float dooropen) {
 			gl.glColor3f(0f, 0f, 0f);
 			createWindow(gl);
-			gl.glColor3f(1.0f, 1.0f, 0.0f);
+			gl.glColor3f(red, green, blue);
 			createDoor(gl);
 			gl.glPushMatrix();
-				gl.glTranslatef(0f, 0f, 10f);
-				createWindow(gl);
-				gl.glColor3f(1.0f, 1.0f, 0.0f);
+				gl.glTranslatef(8f, 0f, 10f);
+				gl.glRotatef(dooropen, 0f, 8f, 0f);
+				gl.glTranslatef(-8f, 0f, 0f);
+	createWindow(gl);
+				gl.glColor3f(red, green, blue);
 				createDoor(gl);
 			gl.glPopMatrix();
 		}
@@ -429,8 +431,8 @@ public class SpCar {
 			gl.glEnd();
 		}
 	
-		private void createBottomRail(GL gl){
-			gl.glColor3f(1.0f, 1.0f, 0.0f);
+		private void createBottomRail(GL gl, float red, float green, float blue){
+			gl.glColor3f(red, green, blue);
 			gl.glBegin(GL.GL_QUAD_STRIP);
 				gl.glVertex3f(2.5f, -0.4f, 0.0f);
 				gl.glVertex3f(8.0f, -0.4f, 0.0f);
@@ -471,15 +473,15 @@ public class SpCar {
 			gl.glEnd();
 		}
 	
-		public void createCar(GL gl) {
-			createFront(gl);
+		public void createCar(GL gl, float red, float green, float blue, float dooropen) {
+			createFront(gl, red, green, blue);
 			gl.glColor3f(0f, 1f, 0f);
-			createBottomRail(gl);
-			createDoorAndWindow(gl);
+			createBottomRail(gl, red, green, blue);
+			createDoorAndWindow(gl, red, green, blue, dooropen);
 			createWindshield(gl);
-			createRoof(gl);
-			createRearWindow(gl);
-			createTrunk(gl);
+			createRoof(gl, red, green, blue);
+			createRearWindow(gl, red, green, blue);
+			createTrunk(gl, red, green, blue);
   	        create4Wheels(gl);
 		}
 
