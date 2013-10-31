@@ -6,6 +6,7 @@ package cityscene;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
@@ -13,10 +14,15 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
+
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.j2d.TextRenderer;
+
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.text.DecimalFormat;
 
 /**
@@ -48,6 +54,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private DecimalFormat form;
     private Tree tree;
     private Building building;
+    private TrafficLight trafficLight;
     private float sceneBoundary_x;
     private float sceneBoundary_y;
     private float sceneBoundary_z;
@@ -87,11 +94,13 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         anim.start();
         building = new Building();
         car = new SpCar();
-        
+        trafficLight = new TrafficLight();
+
         setTitle("City Scene");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setVisible(true);
+        centerWindow();
 
     }
 
@@ -110,7 +119,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         createDoubleLaneLine(gl);
         createGreenFields(gl);       
         createZebraCrossing(gl);
-                
 
     }
 
@@ -150,6 +158,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         drawCar(gl);
         drawCar2(gl);
+        
+        drawLights( drawable );
+        
         gl.glPopMatrix();
 
         //drawCar(gl);
@@ -192,7 +203,21 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glPopMatrix();
 
     }
-    
+
+    private void drawLights( GLAutoDrawable drawable )
+    {
+      GL gl = drawable.getGL();
+      gl.glLoadIdentity();
+      gl.glRotatef(angle, 0, 1, 0); // Panning
+      gl.glRotatef(-90, 1, 0, 0); // Rotate World!
+
+      gl.glPushMatrix();
+        gl.glTranslated( 1.08, -1.08, 0.0 );
+        gl.glRotated( 135, 0.0, 0.0, 1.0 );
+        trafficLight.drawTrafficLight( drawable );
+      gl.glPopMatrix();
+    }
+
     private void displayCameraPositionInfo(GLAutoDrawable drawable) {
         text.beginRendering(drawable.getWidth(), drawable.getHeight());
         text.setColor(new Color(255, 255, 255)); // White
@@ -701,7 +726,10 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
             stop = !(stop);
         } 
         
-        
+        if( KeyEvent.VK_1 == ke.getKeyCode() )
+        {
+          trafficLight.updateTrafficColors();
+        }
     }
 
     @Override
@@ -856,5 +884,20 @@ private void drawCar(GL gl) {
 //            gl.glPopMatrix();
 //        }
 //    }
+
+    public void centerWindow() 
+    {
+        Dimension screenSize =
+            Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        if (frameSize.width > screenSize.width )
+            frameSize.width = screenSize.width;
+        if (frameSize.height > screenSize.height)
+            frameSize.height = screenSize.height;
+        setLocation (
+                   (screenSize.width - frameSize.width ) >> 1,
+                   (screenSize.height - frameSize.height) >> 1
+                   );
+    }
     
 }

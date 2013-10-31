@@ -5,6 +5,52 @@ import javax.media.opengl.GLAutoDrawable;
 
 public class Shapes
 {
+  public void Cylinder( GLAutoDrawable drawable, float radius, float height, float theta )
+  {
+    GL gl = drawable.getGL();
+
+    float radian, r, h, t;
+
+    /* set the cylinder to be drawn using lines (not filled) */
+    gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+
+    /* draw the upper circle */
+    r = radius; h = height; t = theta;
+    gl.glBegin(GL.GL_TRIANGLE_FAN);
+      gl.glVertex3f(0.0f, h, 0.0f);  
+      gl.glVertex3f(r, h, 0.0f);
+      while (t <= 360) {
+        radian = (float)( Math.PI * t / 180.0 );
+        gl.glVertex3f((float)(r * Math.cos(radian)), h, (float)(r * Math.sin(radian)));
+        t = t + theta;
+      }
+    gl.glEnd();
+
+    /* draw the lower circle */
+    r = radius; h = height; t = theta;
+    gl.glBegin(GL.GL_TRIANGLE_FAN);
+      gl.glVertex3f(0.0f, 0.0f, 0.0f);
+      gl.glVertex3f(r, 0.0f, 0.0f);
+      while (t <= 360) {
+        radian = (float)( Math.PI * t / 180.0 );
+        gl.glVertex3d(r * Math.cos(radian), 0.0, r * Math.sin(radian));
+        t = t + theta;
+      }
+    gl.glEnd();
+
+    /* draw the body */
+    r = radius; h = height; t = theta;
+    gl.glBegin(GL.GL_QUAD_STRIP);
+      gl.glVertex3f(r, 0.0f, 0.0f);
+      gl.glVertex3f(r, h, 0.0f);
+      while (t <= 360) {
+        radian = (float)( Math.PI * t / 180.0 );
+        gl.glVertex3d(r * Math.cos(radian), 0.0, r * Math.sin(radian));
+        gl.glVertex3d(r * Math.cos(radian), h, r * Math.sin(radian));
+        t = t + theta;
+      }
+    gl.glEnd();
+  }
 
   public void CylinderDiffRadii( GLAutoDrawable drawable, float upper_radius, float lower_radius, float height, float theta )
   {
@@ -228,6 +274,61 @@ public class Shapes
     gl.glEnd();
   }
 
+  public void drawHalfSphere( GLAutoDrawable drawable, double radius, int steps, int slices )
+  {
+    GL gl = drawable.getGL();
+
+    double [] radii = new double[steps+1];
+    double [] heights = new double[steps+1];
+    double [] sins = new double[slices+1];
+    double [] coss = new double[slices+1];
+    
+    radii[0] = 0.0;
+    heights[0] = radius;
+    double deg = 360.0 / (steps*4);
+    for (int i = 1; i <= steps; i++)
+    {
+        double x = radius * Math.cos(Math.toRadians(deg * i));
+        double y = radius * Math.sin(Math.toRadians(deg * i));
+        radii[i] = y;
+        heights[i] = x;
+    }
+    deg = 360.0 / slices;
+    for (int i = 0; i <= slices; i++)
+    {
+        double cos = Math.cos(Math.toRadians(deg * i));
+        double sin = Math.sin(Math.toRadians(deg * i));
+        sins[i] = sin;
+        coss[i] = cos;
+    }
+    
+    // draw the top of the sphere
+    gl.glBegin(GL.GL_TRIANGLE_FAN);
+        gl.glNormal3d(0.0, radius, 0.0);
+        gl.glVertex3d(0.0, radius, 0.0); // top center of sphere is on the Y-axis
+        for (int j = slices; j >= 0; j--)
+        {
+            gl.glNormal3d(radii[1]*coss[j], heights[1], radii[1]*sins[j]);
+            gl.glVertex3d(radii[1]*coss[j], heights[1], radii[1]*sins[j]);
+        }
+    gl.glEnd();
+    
+    // finish the top hemisphere
+    for (int i = 1; i < steps; i++)
+    {
+        gl.glBegin(GL.GL_QUAD_STRIP);
+            for (int j = 0; j <= slices; j++)
+            {
+                gl.glNormal3d(radii[i+1]*coss[j], heights[i+1], radii[i+1]*sins[j]);
+                gl.glVertex3d(radii[i+1]*coss[j], heights[i+1], radii[i+1]*sins[j]);
+                gl.glNormal3d(radii[i]*coss[j], heights[i], radii[i]*sins[j]);
+                gl.glVertex3d(radii[i]*coss[j], heights[i], radii[i]*sins[j]);
+            }
+        gl.glEnd();
+    }
+    gl.glEnd();
+  }
+  
 }
 
 
