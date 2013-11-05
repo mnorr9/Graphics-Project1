@@ -74,8 +74,6 @@ public class TrafficLight
 
     gl.glColor3d( 0.7, 0.7, 0.7 );
     gl.glPushMatrix();
-      gl.glRotated( 90, 1.0, 0.0, 0.0 );
-      gl.glRotated( 90, 0.0, 1.0, 0.0 );
       gl.glScaled( 0.2, 0.2, 0.2 );
       shapes.Cylinder( drawable, 0.3f, 4, 15 );
       gl.glPushMatrix();
@@ -171,9 +169,11 @@ public class TrafficLight
         break;
     }
     
-    drawLights( drawable );
-    gl.glRotated( 180, 0.0, 1.0, 0.0 );
-    drawLights( drawable );
+    gl.glPushMatrix();
+      drawLights( drawable );
+      gl.glRotated( 180, 0.0, 1.0, 0.0 );
+      drawLights( drawable );
+    gl.glPopMatrix();
   }
   
   private void drawEastWestLights( GLAutoDrawable drawable )

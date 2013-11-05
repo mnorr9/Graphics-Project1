@@ -18,7 +18,6 @@ public class Tree
     GL gl = drawable.getGL();
 
     gl.glPushMatrix();
-      gl.glRotated( 90, 1.0, 0.0, 0.0 );
       gl.glScaled( .01, .01, .01 );
       gl.glPushMatrix();
         gl.glTranslated(-1.0, 25, 0.0);
@@ -39,11 +38,12 @@ public class Tree
     GL gl = drawable.getGL();
 
     gl.glColor3d( 0.56, 0.35, 0.0 );
-    shape.CylinderDiffRadii(drawable, 2, 5, 50, 15);
-    gl.glTranslated(0.0, 75.0, 0.0);
-    gl.glColor3d( 0.0, 0.5, 0.0 );
-    shape.drawSphere(drawable, 30, 5, 15);
-  }
+    gl.glPushMatrix();
+      shape.CylinderDiffRadii(drawable, 2, 5, 50, 15);
+      gl.glTranslated(0.0, 75.0, 0.0);
+      gl.glColor3d( 0.0, 0.5, 0.0 );
+      shape.drawSphere(drawable, 30, 5, 15);
+    gl.glPopMatrix();  }
 
   private void drawLeftBranch( GLAutoDrawable drawable )
   {

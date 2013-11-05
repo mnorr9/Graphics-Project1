@@ -81,8 +81,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         text = new TextRenderer(new Font("SansSerif", Font.BOLD, 12));
         form = new DecimalFormat("####0.00");
 
-        sceneBoundary_x = 2.80f;
-        sceneBoundary_z = 9.0f;
+        sceneBoundary_x = 13f;
+        sceneBoundary_z = 13f;
         stop = false;
         
         GLCapabilities caps = new GLCapabilities();
@@ -110,11 +110,15 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         glu = new GLU();
         GL gl = drawable.getGL();
+
         gl.glEnable(GL.GL_DEPTH_TEST);
         gl.glDepthFunc(GL.GL_LEQUAL);
         gl.glShadeModel(GL.GL_SMOOTH);
         gl.glClearDepth(1.0f);
         
+        //Set color of display window to black.
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
         tree = new Tree();
         createDoubleLaneLine(gl);
         createGreenFields(gl);       
@@ -126,94 +130,88 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     public void display(GLAutoDrawable drawable) {
 
         GL gl = drawable.getGL();
-        setCamera(gl, glu);
+        
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-
-
+        
+        setCamera(gl, glu);
 
         gl.glMatrixMode(GL.GL_MODELVIEW);
+
         gl.glPushMatrix();
 
-        gl.glRotatef(angle, 0, 1, 0); // Panning
-        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
-        gl.glCallList(1); // Creates Double Lane Line
-        gl.glCallList(2); // Creates Green Fields
-        gl.glCallList(3); // Creates Zebra Crossing Box
-
-        plantTree(drawable, -3.0f, 5.0f);
-        plantTree(drawable, -3.0f, -3.0f);
-        plantTree(drawable, -2.0f, -4.0f);
+          gl.glPushMatrix();
+            gl.glRotatef(-90, 1, 0, 0); // Rotate World!
+            gl.glCallList(1); // Creates Double Lane Line
+            gl.glCallList(2); // Creates Green Fields
+            gl.glCallList(3); // Creates Zebra Crossing Box
+          gl.glPopMatrix();
+            
+          plantTree(drawable, 10.0f, -3.0f);
+          plantTree(drawable, -3.0f, -3.0f);
+          plantTree(drawable, -2.0f, -4.0f);
         
-        plantTree(drawable, 5.0f, 10.0f);
-        plantTree(drawable, 5.0f,  5.0f);
-        plantTree(drawable,-2.0f,  5.0f);        
+          plantTree(drawable, 5.0f, 10.0f);
+          plantTree(drawable, 5.0f,  5.0f);
+          plantTree(drawable,-2.0f,  5.0f);        
         
-        // Trees at the borders
-        plantTree(drawable, -2.0f, -15.0f);
-        plantTree(drawable, 5.0f, -10.0f);
+          // Trees at the borders
+          plantTree(drawable, -2.0f, -15.0f);
+          plantTree(drawable, 5.0f, -10.0f);
         
-        drawBuildings(drawable, 3.0f, 1.66f);
-        drawBuildings(drawable, 4.5f, 1.66f);
-        drawStores(drawable, -4.5f,  1.66f);
+          drawBuildings(drawable, 3.0f, -1.66f);
+          drawBuildings(drawable, 4.5f, -1.66f);
+          drawStores(drawable, -4.5f,  -1.66f);
         
-        drawCar(gl);
-        drawCar2(gl);
+          drawCar(gl);
+          drawCar2(gl);
         
-        drawLights( drawable );
+          drawLights( drawable );
         
         gl.glPopMatrix();
 
-        //drawCar(gl);
         displayCameraPositionInfo(drawable);
+
         gl.glFlush();
     }//end of display()
 
-    private void plantTree(GLAutoDrawable drawable, float coord_x, float coord_y){
-        GL gl = drawable.getGL();
-        gl.glLoadIdentity();
-        gl.glRotatef(angle, 0, 1, 0); // Panning
-        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
-        gl.glTranslatef(coord_x, coord_y, 0.0f);
+    private void plantTree(GLAutoDrawable drawable, float coord_x, float coord_z){
+      GL gl = drawable.getGL();
+
+      gl.glPushMatrix();
+        gl.glTranslatef(coord_x, 0.0f, coord_z);
         tree.drawTree(drawable); 
+      gl.glPopMatrix();
     }
     
-    private void drawBuildings(GLAutoDrawable drawable, float coord_x, float coord_y) {
-        GL gl = drawable.getGL();
-        gl.glLoadIdentity();
-        // draw building #1
-        gl.glPushMatrix();
-        gl.glRotatef(angle, 0, 1, 0); // Panning
-        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
-        gl.glTranslated(coord_x, coord_y, 0.0);
+    private void drawBuildings(GLAutoDrawable drawable, float coord_x, float coord_z) {
+      GL gl = drawable.getGL();
+
+      // draw building #1
+      gl.glPushMatrix();
+        gl.glTranslated(coord_x, 0.0, coord_z);
+        gl.glRotated( -90, 1.0, 0.0, 0.0 );
         building.drawBuilding(drawable);
-        gl.glPopMatrix();
-
+      gl.glPopMatrix();
     }
     
-    private void drawStores(GLAutoDrawable drawable, float coord_x, float coord_y) {
-        GL gl = drawable.getGL();
-        gl.glLoadIdentity();
-        // draw building #1
-        gl.glPushMatrix();
-        gl.glRotatef(angle, 0, 1, 0); // Panning
-        gl.glRotatef(-90, 1, 0, 0); // Rotate World!
-        gl.glTranslated(coord_x, coord_y, 0.0);
-        //building.drawBuilding(drawable);
-        Store.drawStore(drawable);
-        gl.glPopMatrix();
+    private void drawStores(GLAutoDrawable drawable, float coord_x, float coord_z) {
+      GL gl = drawable.getGL();
 
+      // draw building #1
+      gl.glPushMatrix();
+        gl.glTranslated(coord_x, 0.0, coord_z);
+        gl.glRotated( -90, 1.0, 0.0, 0.0 );
+        Store.drawStore(drawable);
+      gl.glPopMatrix();
     }
 
     private void drawLights( GLAutoDrawable drawable )
     {
       GL gl = drawable.getGL();
-      gl.glLoadIdentity();
-      gl.glRotatef(angle, 0, 1, 0); // Panning
-      gl.glRotatef(-90, 1, 0, 0); // Rotate World!
 
       gl.glPushMatrix();
-        gl.glTranslated( 1.08, -1.08, 0.0 );
-        gl.glRotated( 135, 0.0, 0.0, 1.0 );
+        gl.glTranslated( 1.08, 0.0, 1.08 );
+        gl.glRotated( -135, 0.0, 1.0, 0.0 );
         trafficLight.drawTrafficLight( drawable );
       gl.glPopMatrix();
     }
@@ -555,22 +553,19 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     }// End of create Double Center Yellow Lines
 
     private void setCamera(GL gl, GLU glu) {
-        // Change to projection matrix.
-        gl.glMatrixMode(GL.GL_PROJECTION);
-        gl.glLoadIdentity();
+      // Change to projection matrix.
+      gl.glMatrixMode(GL.GL_PROJECTION);
+      gl.glLoadIdentity();
 
-        // Perspective.
-        float widthHeightRatio = (float) getWidth() / (float) getHeight();
-        glu.gluPerspective(45, widthHeightRatio, 1, 1000);
+      // Perspective.
+      float widthHeightRatio = (float) getWidth() / (float) getHeight();
+      glu.gluPerspective(45, widthHeightRatio, 1, 1000);
 
-        gl.glRotatef(angle2, 0, 1, 0);
-        glu.gluLookAt(camera_x, camera_y, camera_z, center_x, center_y,
-                center_z, up_x, up_y, up_z);
+      gl.glRotatef(angle2, 0, 1, 0);
+      glu.gluLookAt(camera_x, camera_y, camera_z, center_x, center_y,
+              center_z, up_x, up_y, up_z);
 
-
-        // Change back to model view matrix.
-        gl.glMatrixMode(GL.GL_MODELVIEW);
-        gl.glLoadIdentity();
+      gl.glRotatef(angle, 0, 1, 0); // Panning
 
     }
 
@@ -655,9 +650,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         } else if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
             // Moves camera to the LEFT on the xz plane
-            if (camera_x > (sceneBoundary_x * -1)) {
-                camera_x -= 0.1;
-                center_x -= 0.1;
+            if (camera_x < sceneBoundary_x) {
+                camera_x += 0.1;
+                center_x += 0.1;
             }
         }
 
@@ -672,9 +667,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
             }
         } else if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
             // Moves camera to the RIGHT on the xz plane
-            if (camera_x < sceneBoundary_x) {
-                camera_x += 0.1;
-                center_x += 0.1;
+            if (camera_x > (sceneBoundary_x * -1) ) {
+                camera_x -= 0.1;
+                center_x -= 0.1;
             }
         }
 
@@ -738,13 +733,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     }
 
 private void drawCar(GL gl) {
-        gl.glLoadIdentity();
-        gl.glRotatef(angle, 0, 1, 0); // Panning
-
         
         if (drive < -60) {
             gl.glPushMatrix();
-                gl.glRotatef(angle, 0, 1, 0); // Panning
                 gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
                 gl.glTranslatef(drive, 1.0f, 6.0f);
@@ -753,9 +744,7 @@ private void drawCar(GL gl) {
             gl.glPopMatrix();
         } 
         else if (drive >= -60 && drive < 0) {
-            gl.glLoadIdentity();
             gl.glPushMatrix();
-            gl.glRotatef(angle, 0, 1, 0); // Panning
             gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(-60.0f, 1.0f, 6.0f);
@@ -766,12 +755,9 @@ private void drawCar(GL gl) {
             gl.glPopMatrix();	
         }
         else if (drive >= 0 && drive < 20) {
-            gl.glLoadIdentity();
             gl.glPushMatrix();
-            gl.glRotatef(angle, 0, 1, 0); // Panning
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
-            //gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
             car.createCar(gl, 1, 1, 0, dooropen); 
             if (stop == false){
                 drive += 0.1;
@@ -780,9 +766,7 @@ private void drawCar(GL gl) {
             gl.glPopMatrix();	
         }
         else if (drive >= 20 && drive < 40) {
-            gl.glLoadIdentity();
             gl.glPushMatrix();
-            gl.glRotatef(angle, 0, 1, 0); // Panning
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
@@ -794,10 +778,7 @@ private void drawCar(GL gl) {
             gl.glPopMatrix();	
         }
         else if (drive >= 40 && drive < 50) {
-
-            gl.glLoadIdentity();
             gl.glPushMatrix();
-            gl.glRotatef(angle, 0, 1, 0); // Panning
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
@@ -809,10 +790,7 @@ private void drawCar(GL gl) {
             gl.glPopMatrix();	
         }
         else if (drive >= 50 && drive < 55) {
-
-            gl.glLoadIdentity();
             gl.glPushMatrix();
-            gl.glRotatef(angle, 0, 1, 0); // Panning
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
@@ -825,10 +803,8 @@ private void drawCar(GL gl) {
         } 
         else
         {
-            gl.glLoadIdentity();
             gl.glPushMatrix();
-                gl.glRotatef(angle, 0, 1, 0); // Panning
-    		gl.glRotatef(0f, 0.0f, 1.0f, 0.0f);
+                gl.glRotatef(0f, 0.0f, 1.0f, 0.0f);
                 gl.glRotatef(-90f, 0.0f, 1.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
                 gl.glTranslatef(drive-41f, 1.0f, 5.0f);
@@ -841,10 +817,7 @@ private void drawCar(GL gl) {
     }
     
     private void drawCar2(GL gl){
-        gl.glLoadIdentity();
-        gl.glRotatef(angle, 0, 1, 0); // Panning
             gl.glPushMatrix();
-                //gl.glRotatef(angle, 0, 1, 0); // Panning
                 gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
                 gl.glRotatef(90f, 0.0f, 1.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
@@ -856,35 +829,6 @@ private void drawCar(GL gl) {
             gl.glPopMatrix();
     }    
     
-    
-//    private void drawCar(GL gl) {
-//
-//        
-//        if (drive < 0) {
-//            gl.glPushMatrix();
-//                gl.glRotatef(angle, 0, 1, 0); // Panning
-//                gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
-//                gl.glScalef(0.05f, 0.05f, 0.05f);
-//                gl.glTranslatef(drive, 0.0f, 0.0f);
-//                car.createCar(gl);
-//                drive += 0.1;
-//            gl.glPopMatrix();
-//        } else {
-//            gl.glLoadIdentity();
-//            gl.glPushMatrix();
-//                gl.glRotatef(angle, 0, 1, 0); // Panning
-//    		gl.glRotatef(0f, 0.0f, 1.0f, 0.0f);
-//                gl.glRotatef(-90f, 0.0f, 1.0f, 0.0f);
-//    		     
-//                
-//                gl.glScalef(0.05f, 0.05f, 0.05f);
-//                gl.glTranslatef(drive, 2f, 0f);
-//                car.createCar(gl);
-//                drive += 0.1;
-//            gl.glPopMatrix();
-//        }
-//    }
-
     public void centerWindow() 
     {
         Dimension screenSize =
