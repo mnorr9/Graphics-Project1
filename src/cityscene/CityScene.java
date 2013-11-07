@@ -586,6 +586,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         angle2 = 0; 
         
         drive=-100.0f;
+        turn = 0;
     }
 
     @Override
