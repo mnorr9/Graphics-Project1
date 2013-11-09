@@ -81,7 +81,7 @@ public class Building {
         
         for (int j = 1; j <= floors; j++) {
                 for (int i = 1; i <= windows; i++) {
-                
+         //gl.glNormal3d(0, 0, 1);     
          gl.glVertex3f(x1, y1, 0.0f);
          gl.glVertex3f(x2, y1, 0.0f);
          gl.glVertex3f(x2, y2, 0.0f);
@@ -135,7 +135,7 @@ public class Building {
         
         for (int j = 1; j <= floors; j++) {
                 for (int i = 1; i <= windows; i++) {
-                
+         //gl.glNormal3d(0, 0, 1);       
          gl.glVertex3f(x1, y1, 0.0f);
          gl.glVertex3f(x2, y1, 0.0f);
          gl.glVertex3f(x2, y2, 0.0f);
@@ -177,26 +177,28 @@ public class Building {
         
         gl.glBegin(GL.GL_QUAD_STRIP);
                                                         //front
-        gl.glNormal3d(0.5, 0.5, -0.5);//n1
+        //gl.glNormal3d(0.5, 0.5, -0.5);//n1
         gl.glVertex3f(x, y, 0.0f);//1
-        gl.glNormal3d(0.5, -0.5, -0.5);//n2
+        //gl.glNormal3d(0.5, -0.5, -0.5);//n2
         gl.glVertex3f(x, 0.0f, 0.0f);//2
-        gl.glNormal3d(-0.5, 0.5, -0.5);//n3
+        //gl.glNormal3d(-0.5, 0.5, -0.5);//n3
         gl.glVertex3f(0.0f, y, 0.0f);//3
-        gl.glNormal3d(-0.5, -0.5, -0.5); //n4
+        //gl.glNormal3d(-0.5, -0.5, -0.5); //n4
         gl.glVertex3f(0.0f, 0.0f, 0.0f);//4 //main point, bottom left
                                                 //left
-        gl.glNormal3d(-0.5, 0.5, 0.5);//n5
+        //gl.glNormal3d(-0.5, 0.5, 0.5);//n5
         gl.glVertex3f(0.0f, y, z);//5
-        gl.glNormal3d(-0.5, -0.5, 0.5);//n6
+        //gl.glNormal3d(-0.5, -0.5, 0.5);//n6
         gl.glVertex3f(0.0f, 0.0f, z);//6
                                                 //back
-        gl.glNormal3d(0.5, 0.5, 0.5); //n7
+        ////gl.glNormal3d(0.5, 0.5, 0.5); //n7
+        //gl.glNormal3d(0, 0, 1);
         gl.glVertex3f(x, y, z);//7
-        gl.glNormal3d(0.5, -0.5, 0.5);//n8
+        ////gl.glNormal3d(0.5, -0.5, 0.5);//n8
+        //gl.glNormal3d(0, 0, 1);
         gl.glVertex3f(x, 0.0f, z);//8
                                                 //right
-        gl.glNormal3d(0.5, 0.5, -0.5);//n1
+        //gl.glNormal3d(0.5, 0.5, -0.5);//n1
         gl.glVertex3f(x, y, 0.0f);//1
         gl.glVertex3f(x, 0.0f, 0.0f);//2
         //gl.glVertex3f(x, 0.0f, 0.0f);//2
@@ -204,22 +206,22 @@ public class Building {
         //top and bottom
         gl.glBegin(GL.GL_QUADS);
                                                 //top
-        gl.glNormal3d(0.5, 0.5, -0.5);//n1
+        //gl.glNormal3d(0.5, 0.5, -0.5);//n1
         gl.glVertex3f(x, y, 0.0f);//1
-        gl.glNormal3d(0.5, 0.5, 0.5); //n7
+        //gl.glNormal3d(0.5, 0.5, 0.5); //n7
         gl.glVertex3f(x, y, z);//7
-        gl.glNormal3d(-0.5, 0.5, 0.5);//n5
+        //gl.glNormal3d(-0.5, 0.5, 0.5);//n5
         gl.glVertex3f(0.0f, y, z);//5
-        gl.glNormal3d(-0.5, 0.5, -0.5);//n3
+        //gl.glNormal3d(-0.5, 0.5, -0.5);//n3
         gl.glVertex3f(0.0f, y, 0.0f);//3
                                                 //bottom
-        gl.glNormal3d(0.5, -0.5, -0.5);//n2
+        //gl.glNormal3d(0.5, -0.5, -0.5);//n2
         gl.glVertex3f(x, 0.0f, 0.0f);//2
-        gl.glNormal3d(-0.5, -0.5, -0.5); //n4
+        //gl.glNormal3d(-0.5, -0.5, -0.5); //n4
         gl.glVertex3f(0.0f, 0.0f, 0.0f);//4
-        gl.glNormal3d(-0.5, -0.5, 0.5);//n6
+        //gl.glNormal3d(-0.5, -0.5, 0.5);//n6
         gl.glVertex3f(0.0f, 0.0f, z);//6
-        gl.glNormal3d(0.5, -0.5, 0.5);//n8
+        //gl.glNormal3d(0.5, -0.5, 0.5);//n8
         gl.glVertex3f(x, 0.0f, z);//8
         gl.glEnd();
         gl.glPopMatrix();
@@ -244,7 +246,6 @@ public class Building {
         
         // brown
         gl.glColor3f(0.36f, 0.25f, 0.20f);
-
                                                                 //front
         gl.glNormal3d(0.5, 0.5, -0.5);//n1
         gl.glVertex3f(x, y, 0.0f);//1

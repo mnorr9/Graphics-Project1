@@ -67,6 +67,10 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private float turn = 0;
     private boolean stop;
     
+    private float diffuseBrightness = 0.7f;
+    
+    //private float DiffuseLight[] = { 0.0f, 0.0f, 0.8f, 1.0f };
+    
     /**
      * @param args the command line arguments
      */
@@ -111,6 +115,9 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         glu = new GLU();
         GL gl = drawable.getGL();
 
+//        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, DiffuseLight, 0);
+//        gl.glEnable(GL.GL_LIGHT0);
+        
         gl.glEnable(GL.GL_DEPTH_TEST);
         gl.glDepthFunc(GL.GL_LEQUAL);
         gl.glShadeModel(GL.GL_SMOOTH);
@@ -134,6 +141,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         
         setCamera(gl, glu);
+        sunlight(gl);
 
         gl.glMatrixMode(GL.GL_MODELVIEW);
 
@@ -173,6 +181,29 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         gl.glFlush();
     }//end of display()
+    
+    private void sunlight( GL gl )
+    {
+        gl.glEnable(GL.GL_LIGHTING);
+        gl.glEnable(GL.GL_LIGHT0);
+        float[] lightPos = { 0,10,-1000,1 };        // light position
+        float[] noAmbient = { 0.2f, 0.2f, 0.2f, 1f };     // ambient light
+        float[] diffuse = { diffuseBrightness, diffuseBrightness, diffuseBrightness, 1f };        // diffuse colour
+        float[] spec =    { 1f, 0.6f, 0f, 1f }; // specular light
+        
+        //float diffuseMaterial[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+        //float diffuseMaterial[] = { 0f, 0f, 0f, 1.0f };
+        // properties of the light
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, noAmbient, 0);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec, 0);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, diffuse, 0);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, lightPos, 0);
+        
+        //gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, diffuseMaterial, 0);
+        
+        gl.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
+        gl.glEnable(GL.GL_COLOR_MATERIAL);
+    }
 
     private void plantTree(GLAutoDrawable drawable, float coord_x, float coord_z){
       GL gl = drawable.getGL();
@@ -334,6 +365,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         // lower right sidewalk
         gl.glColor3f(0.3f, 0.3f, 0.3f); // Grey
+        gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-1.0f,  15.0f, 0f);
         gl.glVertex3f(-1.65f, 15.0f, 0f);
         gl.glVertex3f(-1.65f,  1.0f, 0f);
@@ -358,6 +390,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         
         // upper left sidewalk
+        gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(1.0f,  -15.0f, 0f);
         gl.glVertex3f(1.65f, -15.0f, 0f); 
         gl.glVertex3f(1.65f,  -1.0f, 0f);
@@ -380,31 +413,47 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glVertex3f(15.0f,  1.65f, 0f);
         gl.glVertex3f(15.0f,  1.00f, 0f);
         
-        /***********************************/
-                
+        /***********************************/  
         // lower right field
-        gl.glColor3f(0.0f, 0.3f, 0.0f); // Dark Green        
+        gl.glColor3f(0.0f, 0.4f, 0.0f); // Dark Green    
+        gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-1.66f, 15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, 15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f,  1.66f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-1.66f,  1.66f, 0f);
         
         // upper right field
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-1.66f, -15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, -15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f,  -1.66f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-1.66f,  -1.66f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         
         // upper left field
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(1.66f, -15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f, -15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f,  -1.66f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(1.66f,  -1.66f, 0f);
 
         // lower left field
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(1.66f, 15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f, 15.0f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f,  1.66f, 0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(1.66f,  1.66f, 0f);
 
 
@@ -424,28 +473,44 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 //        gl.glVertex3f( 15.0f, -15.0f, 30f);
 
 // yz plane (side plane)
+        gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f,  15.0f, 15.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f,  15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f, -15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(15.0f, -15.0f, 15.0f);
 
 // yz plane (side plane)
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f,  15.0f, 15.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f,  15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, -15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, -15.0f, 15.0f);
 
 
 //xz plane (back plane)
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f( 15.0f, 15.0f, 15.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f( 15.0f, 15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, 15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, 15.0f, 15.0f);
 
 // xz plane (front plane)
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f( 15.0f, -15.0f, 15.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f( 15.0f, -15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, -15.0f,  0.0f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-15.0f, -15.0f, 15.0f);
 
     }
@@ -459,6 +524,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         // ***************************************
         gl.glBegin(GL.GL_LINE_STRIP);
         gl.glLineWidth(2.5f);
+        //gl.glNormal3d(0.0,1.0,0.0);
         gl.glColor3f(1.0f, 1.0f, 0.0f); // yellow
         gl.glVertex3f(0.0f, 1.8f, 0.0f);
         gl.glVertex3f(0.0f, 15.0f, 0.0f);
@@ -466,6 +532,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         gl.glBegin(GL.GL_LINE_STRIP);
         gl.glLineWidth(3.5f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glColor3f(1.0f, 1.0f, 0.0f); // yellow
         gl.glVertex3f(-0.1f, 1.8f, 0.0f);
         gl.glVertex3f(-0.1f, 15.0f, 0.0f);
@@ -473,6 +540,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         gl.glBegin(GL.GL_LINE_STRIP);
         gl.glLineWidth(3.5f);
+        //gl.glNormal3d(0.0,1.0,1.0);
         gl.glColor3f(1.0f, 1.0f, 1.0f); // White
         gl.glVertex3f(0.9f, 1.7f, 0.0f);
         gl.glVertex3f(-0.9f, 1.7f, 0.0f);
@@ -725,6 +793,22 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         if( KeyEvent.VK_1 == ke.getKeyCode() )
         {
           trafficLight.updateTrafficColors();
+        }
+        
+        if( KeyEvent.VK_D == ke.getKeyCode() )
+        {
+        	if (diffuseBrightness > 0.0f) {
+        		diffuseBrightness -= 0.1;
+        		System.out.println(diffuseBrightness);
+        	}
+        }
+        
+        if( KeyEvent.VK_B == ke.getKeyCode() )
+        {
+        	if (diffuseBrightness < 0.7f) {
+        		diffuseBrightness += 0.1;
+        		System.out.println(diffuseBrightness);
+        	}
         }
     }
 
