@@ -1,7 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* File:		CityScene.java
+*
+* Team:		#2
+* Authors: 	Abreu, Bonilla, Gwalthney, Norris, Wallace
+*
+*/
 package cityscene;
 
 import java.awt.event.KeyEvent;
@@ -19,14 +22,12 @@ import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.j2d.TextRenderer;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.text.DecimalFormat;
 
 /**
- *
  * @author nasser
  */
 public class CityScene extends JFrame implements GLEventListener, KeyListener {
@@ -56,7 +57,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private Building building;
     private TrafficLight trafficLight;
     private float sceneBoundary_x;
-    private float sceneBoundary_y;
     private float sceneBoundary_z;
     private SpCar car;
     private float drive=-100.0f;
@@ -68,8 +68,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private boolean stop;
     
     private float diffuseBrightness = 0.7f;
-    
-    //private float DiffuseLight[] = { 0.0f, 0.0f, 0.8f, 1.0f };
     
     /**
      * @param args the command line arguments
@@ -114,9 +112,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         glu = new GLU();
         GL gl = drawable.getGL();
-
-//        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, DiffuseLight, 0);
-//        gl.glEnable(GL.GL_LIGHT0);
         
         gl.glEnable(GL.GL_DEPTH_TEST);
         gl.glDepthFunc(GL.GL_LEQUAL);
@@ -186,20 +181,17 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     {
         gl.glEnable(GL.GL_LIGHTING);
         gl.glEnable(GL.GL_LIGHT0);
+        
         float[] lightPos = { 0,10,-1000,1 };        // light position
         float[] noAmbient = { 0.2f, 0.2f, 0.2f, 1f };     // ambient light
-        float[] diffuse = { diffuseBrightness, diffuseBrightness, diffuseBrightness, 1f };        // diffuse colour
+        float[] diffuse = { diffuseBrightness, diffuseBrightness, diffuseBrightness, 1f };   // diffuse colour
         float[] spec =    { 1f, 0.6f, 0f, 1f }; // specular light
         
-        //float diffuseMaterial[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-        //float diffuseMaterial[] = { 0f, 0f, 0f, 1.0f };
         // properties of the light
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, noAmbient, 0);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec, 0);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, diffuse, 0);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, lightPos, 0);
-        
-        //gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, diffuseMaterial, 0);
         
         gl.glColorMaterial(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE);
         gl.glEnable(GL.GL_COLOR_MATERIAL);
@@ -799,7 +791,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         {
         	if (diffuseBrightness > 0.0f) {
         		diffuseBrightness -= 0.1;
-        		System.out.println(diffuseBrightness);
         	}
         }
         
@@ -807,7 +798,6 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         {
         	if (diffuseBrightness < 0.7f) {
         		diffuseBrightness += 0.1;
-        		System.out.println(diffuseBrightness);
         	}
         }
     }
