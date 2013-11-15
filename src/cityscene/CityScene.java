@@ -1,8 +1,8 @@
 /*
-* File:		CityScene.java
+* File:                CityScene.java
 *
-* Team:		#2
-* Authors: 	Abreu, Bonilla, Gwalthney, Norris, Wallace
+* Team:                #2
+* Authors:         Abreu, Bonilla, Gwalthney, Norris, Wallace
 *
 */
 package cityscene;
@@ -33,8 +33,8 @@ import java.text.DecimalFormat;
 public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
     /**
-     *
-     */
+*
+*/
     private static final long serialVersionUID = 1L;
     private GLCanvas canvas;
     private GLU glu;
@@ -70,8 +70,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private float diffuseBrightness = 0.7f;
     
     /**
-     * @param args the command line arguments
-     */
+* @param args the command line arguments
+*/
     public static void main(String[] args) {
         @SuppressWarnings("unused")
         CityScene cityScene = new CityScene();
@@ -119,11 +119,11 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glClearDepth(1.0f);
         
         //Set color of display window to black.
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        gl.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
         tree = new Tree();
         createDoubleLaneLine(gl);
-        createGreenFields(gl);       
+        createGreenFields(gl);
         createZebraCrossing(gl);
 
     }
@@ -360,25 +360,25 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(-1.0f,  15.0f, 0f);
         gl.glVertex3f(-1.65f, 15.0f, 0f);
-        gl.glVertex3f(-1.65f,  1.0f, 0f);
-        gl.glVertex3f(-1.0f,   1.0f, 0f);
+        gl.glVertex3f(-1.65f, 1.0f, 0f);
+        gl.glVertex3f(-1.0f, 1.0f, 0f);
         
-        gl.glVertex3f(-1.65f,  1.00f, 0f);
-        gl.glVertex3f(-1.65f,  1.65f, 0f);
-        gl.glVertex3f(-15.0f,  1.65f, 0f);
-        gl.glVertex3f(-15.0f,   1.0f, 0f);
+        gl.glVertex3f(-1.65f, 1.00f, 0f);
+        gl.glVertex3f(-1.65f, 1.65f, 0f);
+        gl.glVertex3f(-15.0f, 1.65f, 0f);
+        gl.glVertex3f(-15.0f, 1.0f, 0f);
         
         
         // upper right sidewalk
-        gl.glVertex3f(-1.0f,  -15.0f, 0f);
+        gl.glVertex3f(-1.0f, -15.0f, 0f);
         gl.glVertex3f(-1.65f, -15.0f, 0f);
-        gl.glVertex3f(-1.65f,  -1.0f, 0f);
-        gl.glVertex3f(-1.0f,   -1.0f, 0f);
+        gl.glVertex3f(-1.65f, -1.0f, 0f);
+        gl.glVertex3f(-1.0f, -1.0f, 0f);
 
-        gl.glVertex3f(-1.65f,  -1.00f, 0f);
-        gl.glVertex3f(-1.65f,  -1.65f, 0f);
-        gl.glVertex3f(-15.0f,  -1.65f, 0f);
-        gl.glVertex3f(-15.0f,  -1.00f, 0f);
+        gl.glVertex3f(-1.65f, -1.00f, 0f);
+        gl.glVertex3f(-1.65f, -1.65f, 0f);
+        gl.glVertex3f(-15.0f, -1.65f, 0f);
+        gl.glVertex3f(-15.0f, -1.00f, 0f);
         
         
         // upper left sidewalk
@@ -388,22 +388,22 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glVertex3f(1.65f,  -1.0f, 0f);
         gl.glVertex3f(1.0f,   -1.0f, 0f);        
 
-        gl.glVertex3f(1.65f,  -1.00f, 0f);
-        gl.glVertex3f(1.65f,  -1.65f, 0f);
-        gl.glVertex3f(15.0f,  -1.65f, 0f);
-        gl.glVertex3f(15.0f,  -1.00f, 0f);
+        gl.glVertex3f(1.65f, -1.00f, 0f);
+        gl.glVertex3f(1.65f, -1.65f, 0f);
+        gl.glVertex3f(15.0f, -1.65f, 0f);
+        gl.glVertex3f(15.0f, -1.00f, 0f);
         
         
         // lower left sidewalk
-        gl.glVertex3f(1.0f,  15.0f, 0f);
-        gl.glVertex3f(1.65f, 15.0f, 0f); 
-        gl.glVertex3f(1.65f,  1.0f, 0f);
-        gl.glVertex3f(1.0f,   1.0f, 0f);
+        gl.glVertex3f(1.0f, 15.0f, 0f);
+        gl.glVertex3f(1.65f, 15.0f, 0f);
+        gl.glVertex3f(1.65f, 1.0f, 0f);
+        gl.glVertex3f(1.0f, 1.0f, 0f);
         
-        gl.glVertex3f(1.65f,  1.00f, 0f);
-        gl.glVertex3f(1.65f,  1.65f, 0f);
-        gl.glVertex3f(15.0f,  1.65f, 0f);
-        gl.glVertex3f(15.0f,  1.00f, 0f);
+        gl.glVertex3f(1.65f, 1.00f, 0f);
+        gl.glVertex3f(1.65f, 1.65f, 0f);
+        gl.glVertex3f(15.0f, 1.65f, 0f);
+        gl.glVertex3f(15.0f, 1.00f, 0f);
         
         /***********************************/  
         // lower right field
@@ -448,7 +448,12 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         //gl.glNormal3d(0.0,1.0,1.0);
         gl.glVertex3f(1.66f,  1.66f, 0f);
 
-
+        gl.glColor3f(0.1f, 0.1f, 0.1f); // Street / subfloor
+        gl.glVertex3f( 40.0f,  40.0f, -0.9f);
+        gl.glVertex3f( 40.0f, -40.0f, -0.9f);
+        gl.glVertex3f(-40.0f, -40.0f, -0.9f);
+        gl.glVertex3f(-40.0f,  40.0f, -0.9f);
+        
         gl.glEnd();
         gl.glEndList();
     }// end of create Green Fields.
@@ -458,11 +463,11 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
 
         gl.glColor3f(0.7f, 0.9f, 1.0f); //Sky Blue
         
-//  (ceiling)        
-//        gl.glVertex3f( 15.0f,  15.0f, 30f);
-//        gl.glVertex3f(-15.0f,  15.0f, 30f);
-//        gl.glVertex3f(-15.0f, -15.0f, 30f);
-//        gl.glVertex3f( 15.0f, -15.0f, 30f);
+// (ceiling)
+// gl.glVertex3f( 15.0f, 15.0f, 30f);
+// gl.glVertex3f(-15.0f, 15.0f, 30f);
+// gl.glVertex3f(-15.0f, -15.0f, 30f);
+// gl.glVertex3f( 15.0f, -15.0f, 30f);
 
 // yz plane (side plane)
         gl.glNormal3d(0.0,1.0,1.0);
@@ -632,7 +637,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private void reset() {
         camera_x = 0;
         camera_y = (float) 1;
-        camera_z = (float) -6.20; 
+        camera_z = (float) -6.20;
 
         center_x = 0;
         center_y = 0;
@@ -643,7 +648,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         up_z = 0;
 
         angle = 0;
-        angle2 = 0; 
+        angle2 = 0;
         
         drive=-100.0f;
         turn = 0;
@@ -754,34 +759,33 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         // Look right
         if (keyString.equals(">")) {
             angle2 += 1.0f;
-        }        
+        }
         
         if (keyString.equals("9")) {
-			if (dooropen<70){
-			dooropen += 1;
-			}
+                        if (dooropen<70){
+                        dooropen += 1;
+                        }
         }        
         if (keyString.equals("8")) {
-			if (dooropen>0){
-			dooropen -= 1;
-			}
+                        if (dooropen>0){
+                        dooropen -= 1;
+                        }
         }        
         if (keyString.equals("7")) {
-			if (dooropen2<70){
-			dooropen2 += 1;
-			}
+                        if (dooropen2<70){
+                        dooropen2 += 1;
+                        }
         }        
         if (keyString.equals("6")) {
-			if (dooropen2>0){
-			dooropen2 -= 1;
-			}
+                        if (dooropen2>0){
+                        dooropen2 -= 1;
+                        }
         }  
         
 
        if (keyString.equals("s")) {
             stop = !(stop);
-        } 
-        
+        }
         if( KeyEvent.VK_1 == ke.getKeyCode() )
         {
           trafficLight.updateTrafficColors();
@@ -789,16 +793,16 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         if( KeyEvent.VK_D == ke.getKeyCode() )
         {
-        	if (diffuseBrightness > 0.0f) {
-        		diffuseBrightness -= 0.1;
-        	}
+                if (diffuseBrightness > 0.0f) {
+                        diffuseBrightness -= 0.1;
+                }
         }
         
         if( KeyEvent.VK_B == ke.getKeyCode() )
         {
-        	if (diffuseBrightness < 0.7f) {
-        		diffuseBrightness += 0.1;
-        	}
+                if (diffuseBrightness < 0.7f) {
+                        diffuseBrightness += 0.1;
+                }
         }
     }
 
@@ -817,7 +821,7 @@ private void drawCar(GL gl) {
                 car.createCar(gl, 1, 1, 0, dooropen);
                 drive += 0.1;
             gl.glPopMatrix();
-        } 
+        }
         else if (drive >= -60 && drive < 0) {
             gl.glPushMatrix();
             gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
@@ -827,7 +831,7 @@ private void drawCar(GL gl) {
             if ( stop == false){
                 drive += 0.1;
             }
-            gl.glPopMatrix();	
+            gl.glPopMatrix();        
         }
         else if (drive >= 0 && drive < 20) {
             gl.glPushMatrix();
@@ -838,7 +842,7 @@ private void drawCar(GL gl) {
                 drive += 0.1;
             }
             //turn -= 0.2;
-            gl.glPopMatrix();	
+            gl.glPopMatrix();        
         }
         else if (drive >= 20 && drive < 40) {
             gl.glPushMatrix();
@@ -850,7 +854,7 @@ private void drawCar(GL gl) {
                 drive += 0.1;
                 turn -= 0.2;
             }
-            gl.glPopMatrix();	
+            gl.glPopMatrix();        
         }
         else if (drive >= 40 && drive < 50) {
             gl.glPushMatrix();
@@ -862,19 +866,19 @@ private void drawCar(GL gl) {
                 drive += 0.1;
                 turn -= 0.35;
             }
-            gl.glPopMatrix();	
+            gl.glPopMatrix();        
         }
         else if (drive >= 50 && drive < 55) {
             gl.glPushMatrix();
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
-            car.createCar(gl, 1, 1, 0, dooropen); 
+            car.createCar(gl, 1, 1, 0, dooropen);
             if (stop == false){
                 drive += 0.1;
                 turn -= 0.45;
             }
-            gl.glPopMatrix();	
+            gl.glPopMatrix();        
         } 
         else
         {
@@ -902,8 +906,7 @@ private void drawCar(GL gl) {
                     drive2 += 0.3;
                 }
             gl.glPopMatrix();
-    }    
-    
+    }
     public void centerWindow() 
     {
         Dimension screenSize =
