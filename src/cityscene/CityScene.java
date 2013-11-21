@@ -1,8 +1,7 @@
 /*
-* File:                CityScene.java
-*
-* Team:                #2
-* Authors:         Abreu, Bonilla, Gwalthney, Norris, Wallace
+* File:           CityScene.java
+* Team:           #2
+* Authors:        Abreu, Bonilla, Gwalthney, Norris, Wallace
 *
 */
 package cityscene;
@@ -64,6 +63,8 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     private float drive2=-250.0f;
     private float dooropen=0;
     private float dooropen2=0;
+    private float doorup = 0;
+    private float doorup2 = 0;
     private float turn = 0;
     private boolean stop;
     
@@ -119,7 +120,7 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         gl.glClearDepth(1.0f);
         
         //Set color of display window to black.
-        gl.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         tree = new Tree();
         createDoubleLaneLine(gl);
@@ -161,13 +162,49 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
           plantTree(drawable, -2.0f, -15.0f);
           plantTree(drawable, 5.0f, -10.0f);
         
+          
+          plantTree(drawable, -10.0f, -10.0f);
+          plantTree(drawable, 5.0f, -8.0f);
+        
           drawBuildings(drawable, 3.0f, -1.66f);
           drawBuildings(drawable, 4.5f, -1.66f);
           drawStores(drawable, -4.5f,  -1.66f);
-        
-          drawCar(gl);
+
+          drawBuildings(drawable, -6.0f, -1.66f);
+          
+          gl.glPushMatrix();
+            gl.glRotatef(90, 0, 1, 0);
+            drawBuildings(drawable, -10.0f, -1.66f);
+            drawStores(drawable, -8.5f, -1.66f);         
+          gl.glPopMatrix();
+          
+        //Semi random Tree pattern  
+        for (int y = 5; y <= 12; y++) {
+            for (int x = 5; x <= 12; x++) {
+                plantTree(drawable, (x), (y));
+                plantTree(drawable, -(x), -(y));
+                x++;
+                plantTree(drawable, -(x), (y));
+                y++;
+                plantTree(drawable, (x), -(y));
+            }
+        }
+          
+          
+          gl.glPushMatrix();
+            gl.glRotatef(180, 0, 1, 0);
+            drawBuildings(drawable, -10.0f, -1.66f);
+            drawStores(drawable, -8.5f, -1.66f);
+            drawBuildings(drawable, 10.0f, -1.66f);
+            drawBuildings(drawable, 14.0f, -1.66f); 
+            drawStores(drawable, 8.5f, -1.66f); 
+          gl.glPopMatrix();
+          
+          
+          //drawCar(gl);
           drawCar2(gl);
-        
+          drawCar(gl);
+          
           drawLights( drawable );
         
         gl.glPopMatrix();
@@ -763,22 +800,26 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
         
         if (keyString.equals("9")) {
                         if (dooropen<70){
-                        dooropen += 1;
+                        dooropen += 1;   //allows door to open along x/z plane          
+                        doorup -= 1;     //allows door to move up along x/y plane
                         }
         }        
         if (keyString.equals("8")) {
                         if (dooropen>0){
-                        dooropen -= 1;
+                        dooropen -= 1;   //allows door to close along x/z plane 
+                        doorup += 1;     //allows door to move down along x/y plane
                         }
         }        
         if (keyString.equals("7")) {
                         if (dooropen2<70){
-                        dooropen2 += 1;
+                        dooropen2 += 1;   //allows door to open along x/z plane 
+                        doorup2 -= 1;     //allows door to move up along x/y plane
                         }
         }        
         if (keyString.equals("6")) {
                         if (dooropen2>0){
-                        dooropen2 -= 1;
+                        dooropen2 -= 1;   //allows door to close along x/z plane
+                        doorup2 += 1;     //allows door to move down along x/y plane
                         }
         }  
         
@@ -812,13 +853,13 @@ public class CityScene extends JFrame implements GLEventListener, KeyListener {
     }
 
 private void drawCar(GL gl) {
-        
+
         if (drive < -60) {
             gl.glPushMatrix();
                 gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
                 gl.glTranslatef(drive, 1.0f, 6.0f);
-                car.createCar(gl, 1, 1, 0, dooropen);
+                car.createCar(gl, 1, 1, 0, dooropen, doorup);
                 drive += 0.1;
             gl.glPopMatrix();
         }
@@ -827,7 +868,7 @@ private void drawCar(GL gl) {
             gl.glRotatef(0f, 1.0f, 0.0f, 0.0f);
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(-60.0f, 1.0f, 6.0f);
-            car.createCar(gl, 1, 1, 0, dooropen);
+            car.createCar(gl, 1, 1, 0, dooropen, doorup);
             if ( stop == false){
                 drive += 0.1;
             }
@@ -837,7 +878,7 @@ private void drawCar(GL gl) {
             gl.glPushMatrix();
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
-            car.createCar(gl, 1, 1, 0, dooropen); 
+            car.createCar(gl, 1, 1, 0, dooropen, doorup); 
             if (stop == false){
                 drive += 0.1;
             }
@@ -849,7 +890,7 @@ private void drawCar(GL gl) {
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
-            car.createCar(gl, 1, 1, 0, dooropen);
+            car.createCar(gl, 1, 1, 0, dooropen, doorup);
             if (stop == false){
                 drive += 0.1;
                 turn -= 0.2;
@@ -861,7 +902,7 @@ private void drawCar(GL gl) {
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
-            car.createCar(gl, 1, 1, 0, dooropen);
+            car.createCar(gl, 1, 1, 0, dooropen, doorup);
             if (stop == false){
                 drive += 0.1;
                 turn -= 0.35;
@@ -873,7 +914,7 @@ private void drawCar(GL gl) {
             gl.glScalef(0.05f, 0.05f, 0.05f);
             gl.glTranslatef(drive-60f, 1.0f, 6.0f);
             gl.glRotatef(turn, 0.0f, 1.0f, 0.0f);
-            car.createCar(gl, 1, 1, 0, dooropen);
+            car.createCar(gl, 1, 1, 0, dooropen, doorup);
             if (stop == false){
                 drive += 0.1;
                 turn -= 0.45;
@@ -887,7 +928,7 @@ private void drawCar(GL gl) {
                 gl.glRotatef(-90f, 0.0f, 1.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
                 gl.glTranslatef(drive-41f, 1.0f, 5.0f);
-                car.createCar(gl, 1, 1, 0, dooropen);
+                car.createCar(gl, 1, 1, 0, dooropen, doorup);
                 if (stop == false){
                     drive += 0.1;
                 }
@@ -901,7 +942,7 @@ private void drawCar(GL gl) {
                 gl.glRotatef(90f, 0.0f, 1.0f, 0.0f);
                 gl.glScalef(0.05f, 0.05f, 0.05f);
                 gl.glTranslatef(drive2, 0.0f, 5.0f);
-                car.createCar(gl, 1, 0, 0, dooropen2);
+                car.createCar(gl, 1, 0, 0, dooropen2, doorup2);
                 if (stop == false){
                     drive2 += 0.3;
                 }
