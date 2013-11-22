@@ -1,0 +1,116 @@
+Computer Graphics
+Fall 2013 - WoW 3
+
+
+
+Problem 1. (30 points)
+
+ True/False questions (3 points each)
+
+a) Liang-Barsky algorithm may clip a line four times in the worst case.
+
+
+b) In OpenGL, the view-volumes for perspective projection, that the user can
+   define, are always symmetric with respect to the direction of projection
+   (DOP).
+
+c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
+   projected with no change in their lengths, i.e. the length of the projection
+    of a line will be equal to the length of the line.
+
+d) Cohen-Sutherland algorithm runs faster than Liang-Barsky algorithm if
+   several lines could be trivially rejected, and accepted.
+
+e) A point light source illuminates the scene from only one direction.
+
+
+f) We can not obtain a 3-point (3 vanishing points) projection from a projection
+   plane (VP) that intersects only two principal axes.
+
+
+g) A Lambertian surface reflects equal amount (intensity) of light in all
+   directions.
+
+h) Standard OpenGL position of the camera is (0, 0, 0) in world coordinates,
+   looking in +Z direction, with up vector (0, 1, 0).
+
+i) A view volume is the 3D correspondent of a 2D clipping window.
+
+
+j) In axonometric projections, parallelism of lines is preserved but angles are not.
+
+
+
+Problem 2. (35 points)
+
+Geometrical Modeling
+
+Jimmy Neutron wants to model an airplane consisting of a body and two wings,
+as shown below. The body has length 10 units, both the wings have lengths 5
+units each, the two wings make a 60 degrees angle with the trunk, and both the
+wings are attached to the trunk at distance 7 units from its bottom. The
+bottom of the body is at the origin (0, 0) of the 2D World Coordinate System,
+and the body is placed vertically (i.e. along the y-axis).
+
+
+Jimmy Neutron wrote the following piece of OpenGL code to model the airplane.
+Will this code correctly model the airplane? If not, then:
+
+* (15 points) briefly explain why not
+* (20 points) correct the code so that it models the airplane correctly
+
+glMatrixMode (GL_MODELVIEW); // set the current matrix to ModelView Matrix
+glLoadIdentity(); // initialize the current matrix to Identity matrix
+glBegin (GL_LINES);
+	glVertex2f (0, 0);
+	glVertex2f (10, 0);
+glEnd ();
+glRotatef (-30, 0, 0, 1);
+glTranslatef (7, 0, 0);
+glBegin (GL_LINES);
+	glVertex2f (0, 0);
+	glVertex2f (5, 0);
+glEnd ();
+glRotatef (30, 0, 0, 1);
+glTranslatef (7, 0, 0);
+glBegin (GL_LINES);
+	glVertex2f (0, 0);
+	glVertex2f (5, 0);
+glEnd ();
+
+Note:
+glVertex2f (x, y) places a vertex at the point (x, y).
+glRotatef (A, 0, 0, 1) rotates counterclockwise by an angle A (in degrees) around the z-axis
+glTranslatef (x, y, z) translates by amounts x, y, and z, along the x-, y-, and z-axes, respectively.
+
+
+
+
+Problem 3. (35 points)
+
+Illumination
+
+Consider a triangle ABC, where the coordinates of A, B, and C, are as follows:
+      A(0,0,0), B(2,2,0), and C(2,0,0). Suppose L is a point-light source
+      located at the point (1,1,1). Suppose the intensity of light from L
+      reaching each of A, B, and C is IL = 10 units. Assume that triangle
+      ABC is a Lambertian surface with the Lambertian Reflection Coefficient (Kd)
+      as 0.5.
+
+Compute the intensities of reflected lights at A, B, and C, respectively, 
+using the illumination model for Lambertian surfaces.
+
+Hint: You can easily calculate the length of segment LA as follows:
+|LA| = sqrt ( (xL – xA)2 + (yL – yA)2 + (zL – zA)2 ) = sqrt (3).
+Also, the projection point LA of LA on the normal on A, has coordinates (0,0,1) 
+(because the x and z coordinates of A are 0 and 0, and the y coordinate of L is 1). 
+Hence, the length of segment ALA, |ALA| = 1.
+
+You can now calculate cos of the angle between LA and the normal on A, as ALA / LA.
+
+
+
+
+
+
+
