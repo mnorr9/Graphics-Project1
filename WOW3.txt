@@ -169,7 +169,12 @@ Compute the intensities of reflected lights at A, B, and C, respectively,
 using the illumination model for Lambertian surfaces.
 
 Hint: You can easily calculate the length of segment LA as follows:
-|LA| = sqrt ( (xL – xA)2 + (yL – yA)2 + (zL – zA)2 ) = sqrt (3).
+|LA| = sqrt ( (xL – xA)^2 + (yL – yA)^2 + (zL – zA)^2 ) = sqrt (3).
+
+|LA| = sqrt ( (1 – 0)^2 + (1 – 0)^2 + (1 – 0)^2 ) = sqrt (3).
+|LB| = sqrt ( (1 – 2)^2 + (1 – 2)^2 + (1 – 0)^2 ) = sqrt (3).
+|LC| = sqrt ( (1 – 2)^2 + (1 – 0)^2 + (1 – 0)^2 ) = sqrt (3).
+
 Also, the projection point LA of LA on the normal on A, has coordinates (0,0,1) 
 (because the x and z coordinates of A are 0 and 0, and the y coordinate of L is 1). 
 Hence, the length of segment ALA, |ALA| = 1.
