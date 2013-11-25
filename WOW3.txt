@@ -32,7 +32,7 @@ g) A Lambertian surface reflects equal amount (intensity) of light in all
    directions. TRUE. (pg. 514)
 
 h) Standard OpenGL position of the camera is (0, 0, 0) in world coordinates,
-   looking in +Z direction, with up vector (0, 1, 0).
+   looking in +Z direction, with up vector (0, 1, 0). FALSE. It would be looking on the -Z direction (lecture 8)
 
 i) A view volume is the 3D correspondent of a 2D clipping window. TRUE (pg. 311)
 
