@@ -16,7 +16,8 @@ b) In OpenGL, the view-volumes for perspective projection, that the user can
 
 c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
    projected with no change in their lengths, i.e. the length of the projection
-    of a line will be equal to the length of the line.
+   of a line will be equal to the length of the line. FALSE. This is the definition of 
+   "cavalier projections" (pg. 323)
 
 d) Cohen-Sutherland algorithm runs faster than Liang-Barsky algorithm if
    several lines could be trivially rejected, and accepted. TRUE (lecture 5)
