@@ -19,7 +19,7 @@ c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
     of a line will be equal to the length of the line.
 
 d) Cohen-Sutherland algorithm runs faster than Liang-Barsky algorithm if
-   several lines could be trivially rejected, and accepted.
+   several lines could be trivially rejected, and accepted. TRUE (lecture 5)
 
 e) A point light source illuminates the scene from only one direction.
 
@@ -29,7 +29,7 @@ f) We can not obtain a 3-point (3 vanishing points) projection from a projection
 
 
 g) A Lambertian surface reflects equal amount (intensity) of light in all
-   directions. 
+   directions. TRUE. (pg. 514)
 
 h) Standard OpenGL position of the camera is (0, 0, 0) in world coordinates,
    looking in +Z direction, with up vector (0, 1, 0).
