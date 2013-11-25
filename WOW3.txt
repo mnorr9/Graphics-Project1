@@ -8,11 +8,11 @@ Problem 1. (30 points)
  True/False questions (3 points each)
 
 a) Liang-Barsky algorithm may clip a line four times in the worst case.
-
+   FALSE. That would be the Cohen-Sunderland (lecture 5)
 
 b) In OpenGL, the view-volumes for perspective projection, that the user can
    define, are always symmetric with respect to the direction of projection
-   (DOP).
+   (DOP). 
 
 c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
    projected with no change in their lengths, i.e. the length of the projection
@@ -29,15 +29,15 @@ f) We can not obtain a 3-point (3 vanishing points) projection from a projection
 
 
 g) A Lambertian surface reflects equal amount (intensity) of light in all
-   directions.
+   directions. 
 
 h) Standard OpenGL position of the camera is (0, 0, 0) in world coordinates,
    looking in +Z direction, with up vector (0, 1, 0).
 
-i) A view volume is the 3D correspondent of a 2D clipping window.
+i) A view volume is the 3D correspondent of a 2D clipping window. TRUE (pg. 311)
 
 
-j) In axonometric projections, parallelism of lines is preserved but angles are not.
+j) In axonometric projections, parallelism of lines is preserved but angles are not. TRUE (pg. 317)
 
 
 
