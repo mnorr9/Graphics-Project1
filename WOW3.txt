@@ -57,7 +57,72 @@ Jimmy Neutron wrote the following piece of OpenGL code to model the airplane.
 Will this code correctly model the airplane? If not, then:
 
 * (15 points) briefly explain why not
+
+	Jimmy’s code does not draw the plane correctly. Breaking down the code 
+	we get the following things wrong:
+	
+	   1. Drawing the body of the plane. The first point of the line gets 
+	      placed at the origin, but the end of the line is at position 
+	      10 on the x axis and not in the y. The second vertex call needs 
+	      to be glVertex2f( 0, 10 ).
+
+	   2. Drawing each wing should be put in pushMatrix()/popMatrix() 
+	      section. That way when he does rotates/translates/scales on one 
+	      wing, it doesn’t affect everything else below those calls.
+
+	   3. Both translate calls to move the wings up are wrong. Currently 
+	      Jimmy is moving the wings 7 in the x direction, not the y. 
+	      The correct translate call should be glTranslatef( 0, 7, 0 ).
+
+	   4. The second roatation call should be greater than 30 degrees.
+
+
+
 * (20 points) correct the code so that it models the airplane correctly
+glMatrixMode( GL_MODELVIEW )
+	glLoadIdentity()
+
+	glBegin( GL_LINES )
+
+	    glVertex2f( 0, 0 )
+
+	    glVertex2f( 0, 10 )
+
+	glEnd()
+
+	glPushMatrix()
+
+	    glTranslatef( 0, 7, 0 )
+
+	    glRotatef( -30, 0, 0, 1 )
+
+	    glBegin( GL_LINES )
+
+	        glVertex2f( 0, 0 )
+
+	        glVertex2f( 0, 5 )
+
+	    glEnd()
+
+	glPopMatrix()
+
+	glPushMatrix()
+
+	    glTranslatef( 0, 7, 0 )
+
+	    glRotatef( 30, 0, 0, 1 )
+
+	    glBegin( GL_LINES )
+
+	        glVertex2f( 0, 0 )
+
+	        glVertex2f( 0, -5 )
+
+	    glEnd()
+
+	glPopMatrix()
+	
+*****END*******************
 
 glMatrixMode (GL_MODELVIEW); // set the current matrix to ModelView Matrix
 glLoadIdentity(); // initialize the current matrix to Identity matrix
