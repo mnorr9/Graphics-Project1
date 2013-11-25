@@ -21,7 +21,8 @@ c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
 d) Cohen-Sutherland algorithm runs faster than Liang-Barsky algorithm if
    several lines could be trivially rejected, and accepted. TRUE (lecture 5)
 
-e) A point light source illuminates the scene from only one direction.
+e) A point light source illuminates the scene from only one direction. FALSE. That is the definition of a 
+  "Infinitely Distant Light Source". (pg. 509 and lecture 9) 
 
 
 f) We can not obtain a 3-point (3 vanishing points) projection from a projection
