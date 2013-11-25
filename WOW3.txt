@@ -12,7 +12,7 @@ a) Liang-Barsky algorithm may clip a line four times in the worst case.
 
 b) In OpenGL, the view-volumes for perspective projection, that the user can
    define, are always symmetric with respect to the direction of projection
-   (DOP). 
+   (DOP). TRUE. (pg. 344)
 
 c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
    projected with no change in their lengths, i.e. the length of the projection
@@ -22,7 +22,7 @@ c) In Cabinet projection, lines perpendicular to the projection plane (VP) get
 d) Cohen-Sutherland algorithm runs faster than Liang-Barsky algorithm if
    several lines could be trivially rejected, and accepted. TRUE (lecture 5)
 
-e) A point light source illuminates the scene from only one direction. FALSE. That is the definition of a 
+e) A point light source illuminates the scene from only one direction. FALSE. That is the definition of an 
   "Infinitely Distant Light Source". (pg. 509 and lecture 9) 
 
 
