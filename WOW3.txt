@@ -153,16 +153,30 @@ using the illumination model for Lambertian surfaces.
 Hint: You can easily calculate the length of segment LA as follows:
 |LA| = sqrt ( (xL – xA)^2 + (yL – yA)^2 + (zL – zA)^2 ) = sqrt (3).
 
-|LA| = sqrt ( (1 – 0)^2 + (1 – 0)^2 + (1 – 0)^2 ) = sqrt (3).
-|LB| = sqrt ( (1 – 2)^2 + (1 – 2)^2 + (1 – 0)^2 ) = sqrt (3).
-|LC| = sqrt ( (1 – 2)^2 + (1 – 0)^2 + (1 – 0)^2 ) = sqrt (3).
 
 Also, the projection point LA of LA on the normal on A, has coordinates (0,0,1) 
 (because the x and z coordinates of A are 0 and 0, and the y coordinate of L is 1). 
 Hence, the length of segment ALA, |ALA| = 1.
 
 You can now calculate cos of the angle between LA and the normal on A, as ALA / LA.
+ANSWER:
 
+|LA| = sqrt ( (1 – 0)^2 + (1 – 0)^2 + (1 – 0)^2 ) = sqrt (3).
+|LB| = sqrt ( (1 – 2)^2 + (1 – 2)^2 + (1 – 0)^2 ) = sqrt (3).
+|LC| = sqrt ( (1 – 2)^2 + (1 – 0)^2 + (1 – 0)^2 ) = sqrt (3).
+
+sqrt(3) = 1.732
+ALa / LA = 1.0 / 1.732 = cosine of the angle between Normal and Light source = 0.577
+Kd = 0.5  [Lambertian Reflection Coefficient]
+Il = 10.0 [Intensity of light source]
+Ep  = resulting image intensity
+
+Ep = Kd * Il * cosine of angle
+Ep = (0.5) * (10.0) * (0.577)
+Ep = 2.885
+
+This result would be the same for points A, B and C.
+The light source is at the same distance to all three points. 
 
 
 
