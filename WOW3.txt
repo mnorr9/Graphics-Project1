@@ -94,7 +94,7 @@ Will this code correctly model the airplane? If not, then:
       glRotatef( -30, 0, 0, 1 )
       glBegin( GL_LINES )
         glVertex2f( 0, 0 )
-        glVertex2f( 0, -5 )
+        glVertex2f( 5, 0 )
       glEnd()
     glPopMatrix()
 
@@ -103,7 +103,7 @@ Will this code correctly model the airplane? If not, then:
       glRotatef( 30, 0, 0, 1 )
       glBegin( GL_LINES )
         glVertex2f( 0, 0 )
-        glVertex2f( 0, -5 )
+        glVertex2f( -5, 0 )
       glEnd()
     glPopMatrix()
 	
