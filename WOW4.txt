@@ -8,14 +8,21 @@ http://elvis.rowan.edu/~taggar17/SEGV/Papers/WoW4.doc
 Problem 1
 (35 points)
 
- Weiler-Atherton 2D clipping
+Weiler-Atherton 2D clipping
 
-Shown below are a subject-polygon (SP) and a clip-polygon (CP). Also shown are some points, namely, a through y, on the SP.
+Shown below are a subject-polygon (SP) and a clip-polygon (CP). Also shown are 
+some points, namely, a through y, on the SP.
 
-a) (5 points) Show the clipped SP obtained by clipping it with the CP, using the Weiler-Atherton polygon-clipping algorithm.
-b) (15 points) Show the contents of the stack after each “interesting” event. Recall that an interesting event occurs when 
-   we hit the CP while traversing the SP, or when we hit the SP, while traversing the CP. Assume that you start traversing 
-   the SP in clockwise order at Point a, and the first edge traversed is ab.
+
+a) (5 points) Show the clipped SP obtained by clipping it with the CP, using 
+the Weiler-Atherton polygon-clipping algorithm.
+
+
+b) (15 points) Show the contents of the stack after each “interesting” event. 
+Recall that an interesting event occurs when we hit the CP while traversing 
+the SP, or when we hit the SP, while traversing the CP. Assume that you start 
+traversing the SP in clockwise order at Point a, and the first edge traversed 
+is ab.
 
 
 
@@ -26,27 +33,25 @@ Problem 2
 
 Sutherland-Hodgeman 2D clipping
 
-A polygon is usually represented with a vertex list such that its edges connect adjacent vertices in the vertex list. For example, 
-the polygon shown below with solid lines is represented as a vertex list V = {a, b, c, d, e, f, g} and its list of edges is 
-E = {ab, bc, cd, de, ef, fg, ga}. 
+A polygon is usually represented with a vertex list such that its edges connect
+adjacent vertices in the vertex list. For example, the polygon shown below with
+solid lines is represented as a vertex list V = {a, b, c, d, e, f, g} and its 
+list of edges is E = {ab, bc, cd, de, ef, fg, ga}.
 
-c) (15 points) For the polygon clip rectangle configuration given below (clip rectangle shown by dashed edges), show the 
-updated list of edges E and the updated list of vertices V, after each clipping with the left boundary, right boundary, bottom 
-boundary, and top boundary, in this order, using Sutherland-Hodgeman polygon-clipping algorithm. Show all your work.
+c) (15 points) For the polygon clip rectangle configuration given below (clip 
+rectangle shown by dashed edges), show the updated list of edges E and the 
+updated list of vertices V, after each clipping with the left boundary, right 
+boundary, bottom boundary, and top boundary, in this order, using 
+Sutherland-Hodgeman polygon-clipping algorithm. Show all your work.
 
-d) (5 points) Show the clipped polygon obtained by clipping it with the clipping window, using the Sutherland-Hodgeman 
-polygon-clipping algorithm.
+
+d) (5 points) Show the clipped polygon obtained by clipping it with the clipping 
+window, using the Sutherland-Hodgeman polygon-clipping algorithm.
 
 
 
  
-
-
-
-
-
-
-
+ 
 
 
 Problem 3
@@ -54,8 +59,5 @@ Problem 3
 
 Liang-Barsky 2D clipping
 
-Show step by step how Liang-Barsky algorithm would process the line (P1,P2) in the example below.
-
-
-
-
+Show step by step how Liang-Barsky algorithm would process the line (P1,P2) in 
+the example below.
