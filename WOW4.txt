@@ -1,0 +1,171 @@
+Computer Graphics -- Fall 2013
+
+WoW 4
+http://elvis.rowan.edu/~taggar17/SEGV/Papers/WoW4.doc
+ 
+
+
+Problem 1
+(35 points)
+
+Weiler-Atherton 2D clipping
+
+Shown below are a subject-polygon (SP) and a clip-polygon (CP). Also shown are 
+some points, namely, a through y, on the SP.
+
+
+a) (5 points) Show the clipped SP obtained by clipping it with the CP, using 
+the Weiler-Atherton polygon-clipping algorithm.
+
+
+b) (15 points) Show the contents of the stack after each “interesting” event. 
+Recall that an interesting event occurs when we hit the CP while traversing 
+the SP, or when we hit the SP, while traversing the CP. Assume that you start 
+traversing the SP in clockwise order at Point a, and the first edge traversed 
+is ab.
+
+1. Interesting event: SP intersects CP at point 'b'
+	a. continue on SP.
+
+2. Interesting event: SP intersects CP at point 'c'
+    	a. Push 'c';  [c]
+	b. continue on CP. 
+
+3. Interesting event: CP intersects SP at point 'e'
+	a. Push 'e';  [e, c] 
+	b. continue on SP.
+	
+4. Interesting event: SP intersects CP at point 'f'
+	a. Push 'f';  [f,e,c]
+	b. continue on CP.
+	
+	 
+5. Interesting event: CP intersects SP at point 'b'
+	a. 'b' already visited.
+	b. Pop 'f' ;  [e,c]
+	c. continue on CP.
+	
+			
+6. Interesting event: CP intersects SP at point 'h'
+ 	a. continue on SP.
+	
+	
+7. Interesting event: SP intersects CP at point 'i'
+	a. Push 'i'; [i,e,c]		
+	b. continue on CP.
+	
+	
+8. Interesting event: CP intersects SP at point 'k'
+	a. Push 'k'; [k,i,e,c]
+	b. continue on SP.
+	
+	
+9. Interesting event: SP intersects CP at point 'l'
+	a. Push 'l'; [l,k,i,e,c]
+	b. continue on CP.
+	
+	
+10. Interesting event: CP intersects SP at point 'h'
+	a. 'h' already visited.
+	b. Pop 'l'; [k,i,e,c]
+	c. continue on CP.
+	
+	
+11. Interesting event: CP intersects SP at point 'n'
+	a. continue on SP.
+	
+	
+12. Interesting event: SP intersects CP at point 'o'
+	a. Push 'o'; [o,k,i,e,c]
+	b. continue on CP.
+	
+		
+13. Interesting event: CP intersects SP at point 'x'
+	a. Push 'x'; [x,o,k,i,e,c]
+	b. continue on SP.
+	
+	
+14. Interesting event: SP intersects CP at point 'y'
+	a. Push 'y'; [y,x,o,k,i,e,c]
+	b. continue on CP
+	
+	
+	
+15. Interesting event: CP intersects SP at point 'n'
+	a. 'n' already visited
+	b. Pop 'y'; [x,o,k,i,e,c]
+	c. continue on  SP
+	
+16. Stuck (y --> a). 
+	a. 'a' already visited
+	b. Pop 'x'; [o,k,i,e,c] 
+17. Stuck (x --> y)
+	a. 'y' already visited
+	b. Pop 'o'; [k,i,e,c]
+	c. continue on SP
+18. o --> p
+19. p --> q
+
+20. Interesting event: SP intersects CP at point 'r'
+	a. continue on SP
+	b. r --> s
+	
+21. Interesting event: SP intersects CP at point 't'
+	a. Push 't'; [t,k,i,e,c]
+	b. continue on CP
+	
+	
+22. Interesting event : CP intersects SP at point 'r'
+	a. 'r' already visited
+	b. Pop 't'; [k,i,e,c]
+	c. follow along SP
+23. t --> u 
+24. u --> v
+24. v --> w
+25  Interesting event: SP intersects CP at point 'x'
+	a. 'x' already visited
+	b. Pop 'k; [i,e,c]
+	c. 'k' already visited
+	d. Pop 'i'; [e,c]
+	e. 'i' already visited
+	f. Pop 'e'; [c]
+	g. 'e' already visited
+	h. Pop 'c'; []
+	i. 'c' already visited
+	
+
+
+
+Problem 2
+(30 points)
+
+Sutherland-Hodgeman 2D clipping
+
+A polygon is usually represented with a vertex list such that its edges connect
+adjacent vertices in the vertex list. For example, the polygon shown below with
+solid lines is represented as a vertex list V = {a, b, c, d, e, f, g} and its 
+list of edges is E = {ab, bc, cd, de, ef, fg, ga}.
+
+c) (15 points) For the polygon clip rectangle configuration given below (clip 
+rectangle shown by dashed edges), show the updated list of edges E and the 
+updated list of vertices V, after each clipping with the left boundary, right 
+boundary, bottom boundary, and top boundary, in this order, using 
+Sutherland-Hodgeman polygon-clipping algorithm. Show all your work.
+
+
+d) (5 points) Show the clipped polygon obtained by clipping it with the clipping 
+window, using the Sutherland-Hodgeman polygon-clipping algorithm.
+
+
+
+ 
+ 
+
+
+Problem 3
+(35 points)
+
+Liang-Barsky 2D clipping
+
+Show step by step how Liang-Barsky algorithm would process the line (P1,P2) in 
+the example below.
