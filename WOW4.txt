@@ -18,7 +18,7 @@ a) (5 points) Show the clipped SP obtained by clipping it with the CP, using
 the Weiler-Atherton polygon-clipping algorithm.
 
 
-b) (15 points) Show the contents of the stack after each “interesting” event. 
+b) (15 points) Show the contents of the stack after each â€œinterestingâ€� event. 
 Recall that an interesting event occurs when we hit the CP while traversing 
 the SP, or when we hit the SP, while traversing the CP. Assume that you start 
 traversing the SP in clockwise order at Point a, and the first edge traversed 
@@ -230,6 +230,17 @@ updated list of vertices V, after each clipping with the left boundary, right
 boundary, bottom boundary, and top boundary, in this order, using 
 Sutherland-Hodgeman polygon-clipping algorithm. Show all your work.
 
+Left:
+	V = {H, B, I, J, D, K, E, F}
+	E = {HB, BI, JD, DE, EF, FK, KJ, HI}
+Right:
+	V = {H, B, I, J, K, D, E, L, M}
+	E = {HB, BI, JD, DE, EL, LM, MK, KJ, HI}
+Bottom:
+	V = {H, B, I, N, O, L, E}
+	E = {HB, BI, NE, EL, LO, ON, HI}
+Top:
+	Nothing to clip
 
 d) (5 points) Show the clipped polygon obtained by clipping it with the clipping 
 window, using the Sutherland-Hodgeman polygon-clipping algorithm.
