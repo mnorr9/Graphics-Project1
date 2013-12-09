@@ -142,74 +142,74 @@ is ab.
 	Rick (think I typed all that in correctly)
 ********************************************************
 
-1.	Interesting event: SP intersects CP at 'b'
-	a.	Continue on SP
+1.  Interesting event: SP intersects CP at 'b'
+	a. Continue on SP
 2.  At 'c' we try to exit CP
-	a. 	Push 'c': [c]
-	b. 	Go along CP in CW direction
-3.	At 'e' we reach SP again
-	a. 	Continue on SP in CW direction
-4.	At 'f' we try to exit CP
-	a.	Push 'f': [f,c]
-	b.  Go along CP in CW direction
-5.	We reach 'b' and are stuck
-	a.	Pop 'f': [c]
-	b. 	Go along SP from 'f' in CW direction
-6.	At 'h', SP intersects CP
-	a. 	Continue on SP
-7.	At 'i' we try to exit CP
-	a.	Push 'i': [i,c]
-	b.	Go along CP in CW direction
-8.	At 'k' we reach SP again
-	a. 	Continue on SP in CW direction
-9.	At 'l' we try to exit CP
-	a.	Push 'l': [l,i,c]
-	b.	Go along CP in CW direction
-10.	We reach 'h' and are stuck
-	a.	Pop 'l': [i,c]
-	b. 	Go along SP from 'l' in CW direction
-11.	At 'm', continue on SP
-12.	At 'n', SP intersects CP
-	a. 	Continue on SP
-13.	At 'o' we try to exit CP
-	a.	Push 'o': [o,i,c]
-	b.	Go along CP in CW direction
-14.	We reach 'k' and are stuck
-	a.	Pop 'o': [i,c]
-	b. 	Go along SP from 'o' in CW direction
-15.	At 'p', continue on SP
-16.	At 'q', continue on SP
-17.	At 'r', SP intersects CP
-	a. 	Continue on SP
-18.	At 's', SP intersects CP
-	a. 	Continue on SP
+	a. Push 'c': [c]
+	b. Go along CP in CW direction
+3.  At 'e' we reach SP again
+	a. Continue on SP in CW direction
+4.  At 'f' we try to exit CP
+	a. Push 'f': [f,c]
+	b. Go along CP in CW direction
+5.  We reach 'b' and are stuck
+	a. Pop 'f': [c]
+	b. Go along SP from 'f' in CW direction
+6.  At 'h', SP intersects CP
+	a. Continue on SP
+7.  At 'i' we try to exit CP
+	a. Push 'i': [i,c]
+	b. Go along CP in CW direction
+8.  At 'k' we reach SP again
+	a. Continue on SP in CW direction
+9.  At 'l' we try to exit CP
+	a. Push 'l': [l,i,c]
+	b. Go along CP in CW direction
+10. We reach 'h' and are stuck
+	a. Pop 'l': [i,c]
+	b. Go along SP from 'l' in CW direction
+11. At 'm', continue on SP
+12. At 'n', SP intersects CP
+	a. Continue on SP
+13. At 'o' we try to exit CP
+	a. Push 'o': [o,i,c]
+	b. Go along CP in CW direction
+14. We reach 'k' and are stuck
+	a. Pop 'o': [i,c]
+	b. Go along SP from 'o' in CW direction
+15. At 'p', continue on SP
+16. At 'q', continue on SP
+17. At 'r', SP intersects CP
+	a. Continue on SP
+18. At 's', SP intersects CP
+	a. Continue on SP
 19. At 't' we try to exit CP
-	a.	Push 't': [t,i,c]
-	b.	Go along CP in CW direction
-20.	We reach 'r' and are stuck
-	a.	Pop 't': [i,c]
-	b. 	Go along SP from 't' in CW direction
-21.	At 'u', continue on SP
-22.	At 'v', continue on SP
-23.	At 'w', continue on SP
-24.	At 'x', SP intersects CP
-	a. 	Continue on SP
-25.	At 'y' we try to exit CP
-	a.	Push 'y': [y,i,c]
-	b.	Go along CP in CW direction
+	a. Push 't': [t,i,c]
+	b. Go along CP in CW direction
+20. We reach 'r' and are stuck
+	a. Pop 't': [i,c]
+	b. Go along SP from 't' in CW direction
+21. At 'u', continue on SP
+22. At 'v', continue on SP
+23. At 'w', continue on SP
+24. At 'x', SP intersects CP
+	a. Continue on SP
+25. At 'y' we try to exit CP
+	a. Push 'y': [y,i,c]
+	b. Go along CP in CW direction
 26. We reach 'n' and are stuck
-	a.	Pop 'y': [i,c]
-	b. 	Go along SP from 'y' in CW direction
-27.	We reach 'a' and are stuck
-	a.	Pop 'i': [c]
-	b. 	Go along SP from 'i' in CW direction
-28.	At 'j', continue on SP
-29.	We reach 'k' and are stuck
-	a.	Pop 'c': [] (empty)
-	b. 	Go along SP from 'c' in CW direction
-30.	At 'd', continue on SP
-31.	We reach 'e' and are stuck
-	a.	Stack is empty - STOP
+	a. Pop 'y': [i,c]
+	b. Go along SP from 'y' in CW direction
+27. We reach 'a' and are stuck
+	a. Pop 'i': [c]
+	b. Go along SP from 'i' in CW direction
+28. At 'j', continue on SP
+29. We reach 'k' and are stuck
+	a. Pop 'c': [] (empty)
+	b. Go along SP from 'c' in CW direction
+30. At 'd', continue on SP
+31. We reach 'e' and are stuck
+	a. Stack is empty - STOP
 
 ********************************************************
 
