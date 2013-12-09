@@ -247,3 +247,45 @@ Liang-Barsky 2D clipping
 
 Show step by step how Liang-Barsky algorithm would process the line (P1,P2) in 
 the example below.
+
+(this is most likely wrong. Still a work in progress - Nasser) 
+
+xl = Left boundary
+xr = Right boundary
+yt = Top boundary
+yb = Bottom boundary
+
+ 
+xl <= (x1 + u(x2 - x1))  <= xr
+yb <= (y1 + u(y2 - y1))  <= yt
+
+
+upk <= qk ; where k = 1 (left side), 2 (right side), 3 (bottom side), 4 (top side)
+
+p1 = - (x2 - x1), q1 = (x1 - xl) -- Left Boundary
+p2 =   (x2 - x1), q2 = (xr - x1) -- Right Boundary
+p3 = - (y2 - y1), q3 = (y1 - yb) -- Bottom Boundary
+p4 =   (y2 - y1), q4 = (yt - y1) -- Top Boundary
+
+xl = 0;
+xr = 10;
+yb = 0;
+yt = 10;
+
+assuming
+=================
+x1 = -10
+x2 =   0
+y1 =  10
+y2 = -10
+
+p1 = - ((0)  - (-10)) = -10; q1 = (-10 - 0)   = -10
+p2 =    (0   - (-10)  =  10; q2 = (10 - (-10) =  20
+p3 = -((-10) -  (10)) =  20; q3 = 10 -0       =  10
+p4 =  ((-10) -  (10)) = -20; q4 = 10 - 10     =   0
+
+if q1 < 0, then p1 is outside k1 then  boundary
+
+q1 = -10 < 0;  then p1 is outside left boundary
+p1 = -10 < 0;  then lines goes in the direction 
+               from outside to inside boundary
