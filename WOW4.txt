@@ -278,6 +278,11 @@ p2 =   (x2 - x1), q2 = (xr - x1) -- Right Boundary
 p3 = - (y2 - y1), q3 = (y1 - yb) -- Bottom Boundary
 p4 =   (y2 - y1), q4 = (yt - y1) -- Top Boundary
 
+//DFG
+//I don't think we need to estimate any values for x/y.
+//  we should be able to simplify the above a little more.
+//  Not sure what it is though.
+
 xl = 0;
 xr = 10;
 yb = 0;
