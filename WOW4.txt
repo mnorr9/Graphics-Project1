@@ -27,115 +27,83 @@ is ab.
 ********************************************************
 	Nacer 
 ********************************************************
-
 1. Interesting event: SP intersects CP at point 'b'
-	a. continue on SP.
+	a. continue on SP. (incoming intersection vertex)
 
 2. Interesting event: SP intersects CP at point 'c'
     	a. Push 'c';  [c]
-	b. continue on CP. 
+	b. continue on CP. (outgoing intersection vertex)
 
 3. Interesting event: CP intersects SP at point 'e'
-	a. Push 'e';  [e, c] 
-	b. continue on SP.
+	a. continue on SP. (incoming intersection vertex)
 	
 4. Interesting event: SP intersects CP at point 'f'
-	a. Push 'f';  [f,e,c]
-	b. continue on CP.
+	a. Push 'f';  [f,c]
+	b. continue on CP. (outgoing intersection vertex)
 	
 	 
 5. Interesting event: CP intersects SP at point 'b'
 	a. 'b' already visited.
-	b. Pop 'f' ;  [e,c]
-	c. continue on CP.
+	b. Pop 'f' ;  [c]
+	c. continue on CP. (outgoing intersection vertex)
 	
 			
 6. Interesting event: CP intersects SP at point 'h'
- 	a. continue on SP.
+ 	a. continue on SP. (incoming intersection vertex)
 	
 	
 7. Interesting event: SP intersects CP at point 'i'
-	a. Push 'i'; [i,e,c]		
-	b. continue on CP.
+	a. Push 'i'; [i,c]		
+	b. continue on CP. (outgoing intersection vertex)
 	
 	
 8. Interesting event: CP intersects SP at point 'k'
-	a. Push 'k'; [k,i,e,c]
-	b. continue on SP.
+	a. continue on SP. (incoming intersection vertex)
 	
 	
 9. Interesting event: SP intersects CP at point 'l'
-	a. Push 'l'; [l,k,i,e,c]
-	b. continue on CP.
+	a. Push 'l'; [l,i,c]
+	b. continue on CP. (outgoing intersection vertex)
 	
 	
 10. Interesting event: CP intersects SP at point 'h'
 	a. 'h' already visited.
-	b. Pop 'l'; [k,i,e,c]
-	c. continue on CP.
+	b. Pop 'l'; [i,c]
+	c. continue on CP. (outgoing intersection vertex)
 	
 	
 11. Interesting event: CP intersects SP at point 'n'
-	a. continue on SP.
+	a. continue on SP. (incoming intersection vertex)
 	
 	
 12. Interesting event: SP intersects CP at point 'o'
-	a. Push 'o'; [o,k,i,e,c]
-	b. continue on CP.
+	a. Push 'o'; [o,i,c]
+	b. continue on CP. (outgoing intersection vertex)
 	
 		
-13. Interesting event: CP intersects SP at point 'x'
-	a. Push 'x'; [x,o,k,i,e,c]
-	b. continue on SP.
+13. Interesting event: CP intersects SP at point 'x'	
+	a. continue on SP. (incoming intersection vertex)
 	
 	
 14. Interesting event: SP intersects CP at point 'y'
-	a. Push 'y'; [y,x,o,k,i,e,c]
-	b. continue on CP
+	a. Push 'y'; [y,o,i,c]
+	b. continue on CP (outgoing intersection vertex)
 	
 	
 	
 15. Interesting event: CP intersects SP at point 'n'
 	a. 'n' already visited
-	b. Pop 'y'; [x,o,k,i,e,c]
-	c. continue on  SP
-	
-16. Stuck (y --> a). 
-	a. 'a' already visited
-	b. Pop 'x'; [o,k,i,e,c] 
-17. Stuck (x --> y)
-	a. 'y' already visited
-	b. Pop 'o'; [k,i,e,c]
-	c. continue on SP
-18. o --> p
-19. p --> q
-
-20. Interesting event: SP intersects CP at point 'r'
-	a. continue on SP
-	b. r --> s
-	
-21. Interesting event: SP intersects CP at point 't'
-	a. Push 't'; [t,k,i,e,c]
-	b. continue on CP
-	
-	
-22. Interesting event : CP intersects SP at point 'r'
-	a. 'r' already visited
-	b. Pop 't'; [k,i,e,c]
-	c. follow along SP
-23. t --> u 
-24. u --> v
-24. v --> w
-25  Interesting event: SP intersects CP at point 'x'
-	a. 'x' already visited
-	b. Pop 'k; [i,e,c]
-	c. 'k' already visited
-	d. Pop 'i'; [e,c]
-	e. 'i' already visited
-	f. Pop 'e'; [c]
-	g. 'e' already visited
-	h. Pop 'c'; []
-	i. 'c' already visited
+	b. Pop 'y'; [o,i,c]
+	c. continue on  CP. (outgoing intersection vertex)
+	d. stuck. 
+	e. Pop o; [i,c]
+	f. continue on CP.
+	g. stuck. x already visited. 
+	h. Pop i; [c]
+	i. continue on CP. (outgoing intersection vertex)
+	j. stuck. k already visited.
+	k. Pop c; []
+	l. Nothin in buffer. done. 
 	
 
 ********************************************************
